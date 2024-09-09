@@ -1,0 +1,18 @@
+{
+    "navbar": {
+        "home": "Home",
+        "categoriesDrop": "Categories",
+        "categories": {
+            
+            "1": "Women's Fashion",
+            "2": "Men's Fashion",
+            "3": "Electronics",
+            "4": "Jewelry"
+        },
+        "Brand": "Brand",
+        "logout": "Logout",
+        "login": "Login",
+        "signup": "Signup"
+        
+    }
+}

@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@reduxjs/toolkit": "^2.2.7",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "preline": "^2.4.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

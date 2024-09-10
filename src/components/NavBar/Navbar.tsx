@@ -1,8 +1,17 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import AuthComponent from "../AuthComponent/AuthComponent";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
+  const [isModalOpen, setModalOpen] = useState(false);
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+  };
   interface Category {
     id: number;
     name: string;
@@ -88,7 +97,7 @@ const Navbar = () => {
                       href="#"
                       aria-current="page"
                     >
-                     {t("navbar.home")}
+                      {t("navbar.home")}
                     </a>
                     {/* Dropdown */}
                     <div className="hs-dropdown [--strategy:static] md:[--strategy:fixed] [--adaptive:none] [--is-collapse:true] md:[--is-collapse:false] ">
@@ -128,24 +137,23 @@ const Navbar = () => {
                     >
                       Account
                     </a>
-                   
                   </div>
                 </div>
-                
+
                 {/* Button Group */}
                 <div className=" flex flex-wrap items-center gap-x-1.5">
-                  <a
+                  <button
                     className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
-                    href="#"
+                    onClick={toggleModal}
                   >
-                    Sign in
-                  </a>
-                  <a
+                     {t("navbar.login")}
+                  </button>
+                  <button
                     className="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    href="#"
+                   
                   >
-                    Get started
-                  </a>
+                    {t("navbar.signup")}
+                  </button>
                 </div>
                 {/* End Button Group */}
               </div>
@@ -155,6 +163,20 @@ const Navbar = () => {
         </nav>
       </header>
       {/* ========== END HEADER ========== */}
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
+          onClick={closeModal} // Close modal when clicking outside
+        >
+          <div
+            className="bg-white rounded-lg p-4 max-w-md w-full"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+          >
+            <AuthComponent />
+          </div>
+        </div>
+      )}
     </>
   );
 };

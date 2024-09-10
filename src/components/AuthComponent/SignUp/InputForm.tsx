@@ -1,65 +1,91 @@
-import { Alert, AlertDescription } from "../../ui/alert";
-import { AlertCircle } from "lucide-react";
+import { useFormik } from "formik";
 
-interface InputFieldProps {
-  label: string;
-  name: string;
-  type: string;
-  id: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  touched: boolean | undefined;
-  error: string | undefined;
+import InputField from "./SignUpComponent";
+import { validationSchema } from "./validationSchemas";
+import GoogleAuthButton from "@/components/ui/googleAuthButton";
+
+
+interface SignUpComponentProps {
+  onSwitch: () => void;
+  label?:string;
+  name?:string;
+  type?:string;
+  placeholder?:string;
+  error?:string;
+  touched?:boolean;
 }
 
-const InputField = ({
-  label,
-  id,
-  name,
-  type,
-  value,
-  onChange,
-  onBlur,
-  touched,
-  error,
-}: InputFieldProps) => {
+const SignUpComponent  = ({ onSwitch }: SignUpComponentProps) => {
+  const registerForm = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      rePassword: "",
+      phone: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: () => {
+      // handel supmit insallah
+    },
+  });
+
   return (
-    <div>
-      <label htmlFor={id} className="block text-sm mb-2">
-        {label}
-      </label>
-      <div className="relative mb-2">
-        <input
-          type={type}
-          id={id}
-          name={name}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          className={`py-3 px-4 block w-full border-gray-500 rounded-lg text-sm border ${
-            touched && error ? "border-red-500" : ""
-          } focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none`}
-        />
-        <div className="absolute inset-y-2.5 end-2 pointer-events-none pe-1">
-          {touched && error ? (
-            <div className="bg-red-400 rounded-full w-6 h-6 flex items-center justify-center">
-              <i className="fa-solid fa-exclamation text-white"></i>
-            </div>
-          ) : null}
+    <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
+      <div className="p-4 sm:p-7">
+        <div className="text-center">
+          <h1 className="block text-2xl font-bold text-gray-800">Sign up</h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Already have an account?
+            <button
+              className="text-blue-600 decoration-2 hover:underline focus:outline-none font-medium"
+              onClick={onSwitch}
+            >
+              Sign in here
+            </button>
+          </p>
         </div>
+
+        <GoogleAuthButton />
+        <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">
+          Or
+        </div>
+
+        {/* Form */}
+        <form onSubmit={registerForm.handleSubmit}>
+          <div className="grid gap-y-4">
+            <InputField label="Name" name="name" />
+            <InputField label="Email" name="email" type="email" />
+            <InputField label="Password" name="password" type="password" />
+            <InputField label="Confirm Password" name="rePassword" type="password" />
+            <InputField label="Phone" name="phone" />
+            
+            <div className="flex items-center">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500"
+              />
+              <label htmlFor="terms" className="text-sm ms-3">
+                I accept the{" "}
+                <a className="text-blue-600 decoration-2 hover:underline font-medium" href="#">
+                  Terms and Conditions
+                </a>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none"
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
       </div>
-      {touched && error ? (
-        <Alert
-          variant="destructive"
-          className="bg-red-100 border-red-300 flex items-center space-x-2"
-        >
-          <AlertCircle className="h-4 w-4 text-black" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null}
     </div>
   );
 };
 
-export default InputField;
+export default SignUpComponent;

@@ -6,6 +6,12 @@ import FormErrorDisplay from "./formErrorDisplay";
 
 interface SignUpComponentProps {
   onSwitch: () => void;
+  label?:string;
+  name?:string;
+  type?:string;
+  placeholder?:string;
+  error?:string;
+  touched?:boolean;
 }
 
 const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {

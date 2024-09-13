@@ -54,7 +54,29 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		  animation: {
+			"scale-up-center": "scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000)   both",
+			 "slide-bottom": "slide-bottom 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715)   both",
+		},
+		keyframes: {
+			"scale-up-center": {
+                    "0%": {
+                        transform: "scale(.5)"
+                    },
+                    to: {
+                        transform: "scale(1)"
+                    }
+                },
+				"slide-bottom": {
+                    "0%": {
+                        transform: "translateY(0)"
+                    },
+                    to: {
+                        transform: "translateY(100px)"
+                    }
+                }
+		}
   	}
   },
   plugins: [

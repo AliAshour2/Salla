@@ -18,7 +18,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
   });
 
   return (
-    <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
+    <div className="animate-scale-up-center mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
       <div className="p-4 sm:p-7">
         <div className="text-center">
           <p className="mt-2 text-sm text-gray-600">

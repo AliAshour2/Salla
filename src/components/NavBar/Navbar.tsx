@@ -5,12 +5,19 @@ import AuthComponent from "../AuthComponent/AuthComponent";
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
 
   const closeModal = () => {
     setModalOpen(false);
   };
-  const toggleModal = () => {
-    setModalOpen(!isModalOpen);
+  const openSignInModal = () => {
+    setIsSignIn(true);
+    setModalOpen(true);
+  };
+
+  const openSignUpModal = () => {
+    setIsSignIn(false);
+    setModalOpen(true);
   };
   interface Category {
     id: number;
@@ -144,13 +151,13 @@ const Navbar = () => {
                 <div className=" flex flex-wrap items-center gap-x-1.5">
                   <button
                     className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
-                    onClick={toggleModal}
+                    onClick={openSignInModal}
                   >
-                     {t("navbar.login")}
+                    {t("navbar.login")}
                   </button>
                   <button
                     className="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                   
+                    onClick={openSignUpModal}
                   >
                     {t("navbar.signup")}
                   </button>
@@ -173,7 +180,7 @@ const Navbar = () => {
             className="bg-white rounded-lg p-4 max-w-md w-full"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
           >
-            <AuthComponent />
+           <AuthComponent isSignIn={isSignIn} />
           </div>
         </div>
       )}

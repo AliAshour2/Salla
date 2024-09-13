@@ -23,7 +23,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
   });
 
   return (
-    <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
+    <div className="animate-scale-up-center mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
       <div className="p-4 sm:p-7">
         <div className="text-center">
           <h1 className="block text-2xl font-bold text-gray-800">Sign up</h1>

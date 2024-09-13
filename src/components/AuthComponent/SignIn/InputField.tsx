@@ -57,7 +57,7 @@ const InputField = ({
       {error && touched && (
         <Alert
           variant="destructive"
-          className="bg-red-100 border-red-300 flex items-center space-x-2"
+          className=" bg-red-100 border-red-300 flex items-center space-x-2"
         >
           <AlertCircle className="h-4 w-4 text-black" />
           <AlertDescription>{error}</AlertDescription>

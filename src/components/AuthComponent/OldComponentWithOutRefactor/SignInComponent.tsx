@@ -1,4 +1,4 @@
-import GoogleAuthButton from "../ui/googleAuthButton";
+import GoogleAuthButton from "../../ui/googleAuthButton";
 
 interface SignInComponentProps {
     onSwitch: () => void;

@@ -1,11 +1,11 @@
-import { Alert, AlertDescription } from "../ui/alert";
+import { Alert, AlertDescription } from "../../ui/alert";
 import { AlertCircle } from "lucide-react";
 
 
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import GoogleAuthButton from "../ui/googleAuthButton";
+import GoogleAuthButton from "../../ui/googleAuthButton";
 
 interface SignUpComponentProps {
   onSwitch: () => void;

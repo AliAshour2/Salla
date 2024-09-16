@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AuthState } from "../types/authTypes";
 import { AuthAPI } from "../api/authAPI";
+import { RootState } from "@/app/store";
 
 const initialState: AuthState = {
   token: null,
@@ -13,14 +14,17 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (
     credentials: { email: string; password: string },
-    { rejectWithValue }
+    { rejectWithValue ,dispatch }
   ) => {
     try {
-      return await AuthAPI.login(credentials);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
+
+      const response = await AuthAPI.login(credentials);
+      dispatch(setToken(response.data))
+      return response
+    } catch (err ) {
+      if (axios.isAxiosError(err )) {
         return rejectWithValue(
-          err.response?.data.message || "An error occurred"
+          err.response?.data.message  || "An error occurred"
         );
       } else if (err instanceof Error) {
         return rejectWithValue(err.message);
@@ -58,6 +62,8 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -107,5 +113,6 @@ const authSlice = createSlice({
   },
 });
 
+export const selectIsLoggedIn = (state: RootState) => !!state.auth.token;
 export const { logout, setToken } = authSlice.actions;
 export default authSlice.reducer;

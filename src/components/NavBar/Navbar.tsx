@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthComponent from "../AuthComponent/AuthComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectIsLoggedIn } from "@/features/auth/slices/authSlice";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+   const dispatch = useDispatch();
 
   const closeModal = () => {
     setModalOpen(false);
@@ -19,6 +23,10 @@ const Navbar = () => {
     setIsSignIn(false);
     setModalOpen(true);
   };
+
+  const handleLogout =() =>{
+    dispatch(logout())
+  }
   interface Category {
     id: number;
     name: string;

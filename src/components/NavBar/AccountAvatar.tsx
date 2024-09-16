@@ -11,7 +11,7 @@ import {
 import { logout } from "@/features/auth/slices/authSlice";
 
 const AccountAvatar = () => {
-  
+
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());

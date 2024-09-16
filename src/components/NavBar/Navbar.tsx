@@ -7,6 +7,7 @@ import AccountAvatar from "./AccountAvatar";
 import Modal from "./Modal";
 import { Heart, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
@@ -60,7 +61,7 @@ const Navbar = () => {
   return (
     <>
       {/* ========== HEADER ========== */}
-      <header className="flex flex-wrap py-3  md:justify-start md:flex-nowrap z-50 w-full bg-white border-b border-gray-200">
+      <header className="flex flex-wrap py-2  md:justify-start md:flex-nowrap z-50 w-full bg-white border-b border-gray-200">
         <nav className="relative max-w-[85rem] w-full mx-auto md:flex md:items-center md:justify-between md:gap-3 py-2 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center gap-x-1">
             <a
@@ -175,10 +176,31 @@ const Navbar = () => {
 
                 {/* Button Group */}
 
-                <div className="flex gap-2">
-                  <Heart onClick={handleClickOnWishList} />
-                  <ShoppingCart onClick={handleClickOnCart} />
-                 
+                <div className="flex gap-2 mr-2">
+                  <Button
+                    onClick={handleClickOnWishList}
+                    variant="ghost"
+                    size="icon"
+                    className="relative"
+                  >
+                    <Heart/>
+                    <span className="absolute -top-0.5 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
+                      5
+                    </span>
+                  </Button>
+
+                  <Button
+                    onClick={handleClickOnCart}
+                    variant="ghost"
+                    size="icon"
+                    className="relative"
+                  >
+                    <ShoppingCart />
+
+                    <span className="absolute -top-0.5 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
+                      5
+                    </span>
+                  </Button>
                 </div>
                 {isLoggedIn ? (
                   <AccountAvatar />

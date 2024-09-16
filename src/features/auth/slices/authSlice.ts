@@ -4,8 +4,14 @@ import { AuthState } from "../types/authTypes";
 import { AuthAPI } from "../api/authAPI";
 import { RootState } from "@/app/store";
 
+
+const getTokenFromLocalStorage = localStorage.getItem("userToken");
+
+
+
 const initialState: AuthState = {
-  token: null,
+  
+  token: getTokenFromLocalStorage ? getTokenFromLocalStorage : null,
   status: "idle",
   error: null,
 };

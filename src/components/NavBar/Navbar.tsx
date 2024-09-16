@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, selectIsLoggedIn } from "@/features/auth/slices/authSlice";
 import AccountAvatar from "./AccountAvatar";
 import Modal from "./Modal";
+import { Heart, ShoppingCart } from "lucide-react";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
@@ -25,6 +27,23 @@ const Navbar = () => {
     setIsSignIn(false);
     setModalOpen(true);
   };
+
+  const handleClickOnWishList = () => {
+    if(!isLoggedIn){
+      toast.error("Please login first");
+      openSignInModal();
+    }
+  }
+
+  const handleClickOnCart = () =>{
+    if(!isLoggedIn){
+      toast.error("Please login first");
+      openSignInModal();
+  }
+  }
+
+
+
 
   const handleLogout = () => {
     dispatch(logout());
@@ -157,15 +176,24 @@ const Navbar = () => {
                   </div>
                 </div>
 
+             
+
+                 
+
                 {/* Button Group */}
+
+                <div className="flex gap-2">
+                
+                <Heart  onClick={handleClickOnWishList}  />
+                <ShoppingCart onClick={handleClickOnCart} />
+                </div>
                 {isLoggedIn ? (
-                  // <button
-                  //   onClick={handleLogout}
-                  //   className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
-                  // >
-                  //   {t("navbar.logout")}
-                  // </button>
-                  <AccountAvatar/>
+                  <button
+                    onClick={handleLogout}
+                    className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
+                  >
+                    {t("navbar.logout")}
+                  </button>
                 ) : (
                   <div className=" flex flex-wrap items-center gap-x-1.5">
                     <button

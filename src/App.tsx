@@ -1,13 +1,14 @@
 
 import './App.css'
-import Navbar from './components/NavBar/Navbar'
+import Layout from './components/LayOut/Layout'
+
 
 function App() {
   
 
   return (
     <>
-      <Navbar />
+      <Layout/>
     </>
   )
 }

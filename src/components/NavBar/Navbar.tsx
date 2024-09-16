@@ -178,15 +178,10 @@ const Navbar = () => {
                 <div className="flex gap-2">
                   <Heart onClick={handleClickOnWishList} />
                   <ShoppingCart onClick={handleClickOnCart} />
-                 {isLoggedIn ?  <AccountAvatar /> : null}
+                 
                 </div>
                 {isLoggedIn ? (
-                  <button
-                    onClick={handleLogout}
-                    className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
-                  >
-                    {t("navbar.logout")}
-                  </button>
+                  <AccountAvatar />
                 ) : (
                   <div className=" flex flex-wrap items-center gap-x-1.5">
                     <button

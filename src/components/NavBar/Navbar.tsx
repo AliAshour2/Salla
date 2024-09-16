@@ -3,13 +3,15 @@ import { useTranslation } from "react-i18next";
 import AuthComponent from "../AuthComponent/AuthComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectIsLoggedIn } from "@/features/auth/slices/authSlice";
+import AccountAvatar from "./AccountAvatar";
+import Modal from "./Modal";
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     setModalOpen(false);
@@ -24,9 +26,9 @@ const Navbar = () => {
     setModalOpen(true);
   };
 
-  const handleLogout =() =>{
-    dispatch(logout())
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   interface Category {
     id: number;
     name: string;
@@ -156,20 +158,30 @@ const Navbar = () => {
                 </div>
 
                 {/* Button Group */}
-                <div className=" flex flex-wrap items-center gap-x-1.5">
-                  <button
-                    className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
-                    onClick={openSignInModal}
-                  >
-                    {t("navbar.login")}
-                  </button>
-                  <button
-                    className="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    onClick={openSignUpModal}
-                  >
-                    {t("navbar.signup")}
-                  </button>
-                </div>
+                {isLoggedIn ? (
+                  // <button
+                  //   onClick={handleLogout}
+                  //   className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
+                  // >
+                  //   {t("navbar.logout")}
+                  // </button>
+                  <AccountAvatar/>
+                ) : (
+                  <div className=" flex flex-wrap items-center gap-x-1.5">
+                    <button
+                      className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
+                      onClick={openSignInModal}
+                    >
+                      {t("navbar.login")}
+                    </button>
+                    <button
+                      className="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                      onClick={openSignUpModal}
+                    >
+                      {t("navbar.signup")}
+                    </button>
+                  </div>
+                )}
                 {/* End Button Group */}
               </div>
             </div>
@@ -179,19 +191,9 @@ const Navbar = () => {
       </header>
       {/* ========== END HEADER ========== */}
       {/* Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-          onClick={closeModal} // Close modal when clicking outside
-        >
-          <div
-            className="bg-white rounded-lg p-4 max-w-md w-full"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
-          >
-           <AuthComponent isSignIn={isSignIn} />
-          </div>
-        </div>
-      )}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <AuthComponent isSignIn={isSignIn} />
+      </Modal>
     </>
   );
 };

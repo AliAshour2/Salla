@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { Toaster } from 'sonner';
 import Navbar from "../NavBar/Navbar";
 import { Ban } from "lucide-react";
-import { error } from "console";
 
 const Layout = () => {
   return (

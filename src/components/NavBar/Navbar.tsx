@@ -29,21 +29,18 @@ const Navbar = () => {
   };
 
   const handleClickOnWishList = () => {
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
       toast.error("Please login first");
       openSignInModal();
     }
-  }
+  };
 
-  const handleClickOnCart = () =>{
-    if(!isLoggedIn){
+  const handleClickOnCart = () => {
+    if (!isLoggedIn) {
       toast.error("Please login first");
       openSignInModal();
-  }
-  }
-
-
-
+    }
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -176,16 +173,12 @@ const Navbar = () => {
                   </div>
                 </div>
 
-             
-
-                 
-
                 {/* Button Group */}
 
                 <div className="flex gap-2">
-                
-                <Heart  onClick={handleClickOnWishList}  />
-                <ShoppingCart onClick={handleClickOnCart} />
+                  <Heart onClick={handleClickOnWishList} />
+                  <ShoppingCart onClick={handleClickOnCart} />
+                 {isLoggedIn ?  <AccountAvatar /> : null}
                 </div>
                 {isLoggedIn ? (
                   <button

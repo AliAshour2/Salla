@@ -4,13 +4,9 @@ import { AuthState } from "../types/authTypes";
 import { AuthAPI } from "../api/authAPI";
 import { RootState } from "@/app/store";
 
-
 const getTokenFromLocalStorage = localStorage.getItem("userToken");
 
-
-
 const initialState: AuthState = {
-  
   token: getTokenFromLocalStorage ? getTokenFromLocalStorage : null,
   status: "idle",
   error: null,
@@ -20,17 +16,16 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (
     credentials: { email: string; password: string },
-    { rejectWithValue ,dispatch }
+    { rejectWithValue, dispatch }
   ) => {
     try {
-
       const response = await AuthAPI.login(credentials);
-      dispatch(setToken(response.data))
-      return response
-    } catch (err ) {
-      if (axios.isAxiosError(err )) {
+      dispatch(setToken(response.data));
+      return response;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
         return rejectWithValue(
-          err.response?.data.message  || "An error occurred"
+          err.response?.data.message || "An error occurred"
         );
       } else if (err instanceof Error) {
         return rejectWithValue(err.message);
@@ -69,7 +64,28 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-
+export const updateLoggedUserData = createAsyncThunk(
+  "auth/updateLoggedUserData",
+  async (
+    credentials: { name: string; email: string; phone: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await AuthAPI.updateLoggedUserData(credentials);
+      return response;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(
+          err.response?.data.message || "An error occurred"
+        );
+      } else if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
+      }
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -115,6 +131,15 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state: AuthState, action) => {
         state.status = "failed";
         state.error = (action.payload as string) || "An unknown error occurred";
+      })
+      .addCase(updateLoggedUserData.pending, (state: AuthState) => {
+        state.status = "loading";
+      })
+      .addCase(updateLoggedUserData.fulfilled, (state: AuthState) => {
+        state.status = "succeeded";
+      })
+      .addCase(updateLoggedUserData.rejected, (state: AuthState) => {
+        state.status = "failed";
       });
   },
 });

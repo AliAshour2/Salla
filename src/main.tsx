@@ -8,6 +8,9 @@ import i18n from "./i18n.ts";
 import store from "./app/store.ts";
 import { Provider } from "react-redux";
 
+
+
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>

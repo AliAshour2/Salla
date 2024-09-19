@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthComponent from "../AuthComponent/AuthComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { logout, selectIsLoggedIn } from "@/features/auth/slices/authSlice";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "@/features/auth/slices/authSlice";
 import AccountAvatar from "./AccountAvatar";
 import Modal from "./Modal";
 import { Heart, ShoppingCart } from "lucide-react";
@@ -14,7 +14,7 @@ const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const dispatch = useDispatch();
+
 
   const closeModal = () => {
     setModalOpen(false);
@@ -43,9 +43,6 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
   interface Category {
     id: number;
     name: string;

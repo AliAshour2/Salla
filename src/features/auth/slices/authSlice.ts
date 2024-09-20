@@ -9,6 +9,7 @@ const initialState: AuthState = {
   token: getTokenFromLocalStorage ? getTokenFromLocalStorage : null,
   status: "idle",
   error: null,
+  message :null,
 };
 
 
@@ -71,8 +72,9 @@ const authSlice = createSlice({
         state.error = null;
         state.token = null;
       })
-      .addCase(forgetPassword.fulfilled, (state: AuthState) => {
+      .addCase(forgetPassword.fulfilled, (state: AuthState , action) => {
         state.status = "succeeded";
+        state.message = action.payload.message; 
       })
       .addCase(forgetPassword.rejected, (state: AuthState, action) => {
         state.status = "failed";

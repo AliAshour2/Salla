@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "@/app/store";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ShieldAlert } from "lucide-react";
 import { loginUser } from "@/features/auth/thunks/authThunks";
+import ForgetPassword from "../forgetPassword/ForgetPassword";
 
 interface SignUpComponentProps {
   onSwitch: () => void;
@@ -78,8 +79,8 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
                   touched={signInForm.touched.password}
                 />
 
-                <p   className="absolute inset-y-0 end-0 text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
-                  Forgot password?
+                <p   className="absolute inset-y-0 end-0">
+                  <ForgetPassword/>
                 </p>
               </div>
               <div className="flex items-center">

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState } from "../types/authTypes";
 import { RootState } from "@/app/store";
-import { loginUser, registerUser, updateLoggedUserData } from "../thunks/authThunks";
+import { forgetPassword, loginUser, registerUser, updateLoggedUserData } from "../thunks/authThunks";
 
 const getTokenFromLocalStorage = localStorage.getItem("userToken");
 
@@ -65,7 +65,19 @@ const authSlice = createSlice({
       })
       .addCase(updateLoggedUserData.rejected, (state: AuthState) => {
         state.status = "failed";
-      });
+      })
+      .addCase(forgetPassword.pending, (state: AuthState) => {
+        state.status = "loading";
+        state.error = null;
+        state.token = null;
+      })
+      .addCase(forgetPassword.fulfilled, (state: AuthState) => {
+        state.status = "succeeded";
+      })
+      .addCase(forgetPassword.rejected, (state: AuthState, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
+      })
   },
 });
 

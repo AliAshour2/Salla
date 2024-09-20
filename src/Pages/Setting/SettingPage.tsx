@@ -12,7 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { updateLoggedUserData } from "@/features/auth/slices/authSlice";
+import { updateLoggedUserData } from "@/features/auth/thunks/authThunks";
+
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

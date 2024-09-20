@@ -9,13 +9,16 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { logout } from "@/features/auth/slices/authSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AccountAvatar = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
+   
   };
 
   return (

@@ -4,9 +4,11 @@ import InputField from "./InputField";
 import { validationSchema } from "./validationSchemas";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/store";
-import { registerUser } from "@/features/auth/slices/authSlice";
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ShieldAlert } from "lucide-react";
+import { registerUser } from "@/features/auth/thunks/authThunks";
+
 
 interface SignUpComponentProps {
   onSwitch: () => void;

@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const Base_URL = "https://ecommerce.routemisr.com";
-const API_URL_AUTH = "https://ecommerce.routemisr.com/api/v1/auth";
+import { Base_URL } from "@/constants";
+import { API_URL_AUTH } from "@/constants";
 
 export const AuthAPI = {
   login: async (credentials: { email: string; password: string }) => {
@@ -16,6 +15,11 @@ export const AuthAPI = {
     phone: string;
   }) => {
     const response = await axios.post(`${API_URL_AUTH}/signup`, reqBody);
+    return response.data;
+  },
+
+  forgetPassword : async (email: string) => {
+    const response = await axios.post(`${API_URL_AUTH}/forgotPasswords`, {email});
     return response.data;
   },
 
@@ -38,4 +42,6 @@ export const AuthAPI = {
     );
     return response.data;
   },
+
+
 };

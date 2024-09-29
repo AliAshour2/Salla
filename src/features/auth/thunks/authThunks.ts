@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AuthAPI } from "../api/authAPI";
 import { setToken } from "../slices/authSlice";
-import axios from "axios";
+import { handleError } from "@/features/helper/apiErrorHandleHelber";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -14,15 +14,7 @@ export const loginUser = createAsyncThunk(
       dispatch(setToken(response.data));
       return response;
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        return rejectWithValue(
-          err.response?.data.message || "An error occurred"
-        );
-      } else if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      } else {
-        return rejectWithValue("An unknown error occurred");
-      }
+      return handleError(err, rejectWithValue);
     }
   }
 );
@@ -42,15 +34,7 @@ export const registerUser = createAsyncThunk(
     try {
       return await AuthAPI.register(reqBody);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        return rejectWithValue(
-          err.response?.data.message || "An error occurred"
-        );
-      } else if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      } else {
-        return rejectWithValue("An unknown error occurred");
-      }
+      return handleError(err, rejectWithValue);
     }
   }
 );
@@ -65,15 +49,7 @@ export const updateLoggedUserData = createAsyncThunk(
       const response = await AuthAPI.updateLoggedUserData(credentials);
       return response;
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        return rejectWithValue(
-          err.response?.data.message || "An error occurred"
-        );
-      } else if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      } else {
-        return rejectWithValue("An unknown error occurred");
-      }
+      return handleError(err, rejectWithValue);
     }
   }
 );
@@ -82,39 +58,22 @@ export const forgetPassword = createAsyncThunk(
   "auth/forgetPassword",
   async (email: string, { rejectWithValue }) => {
     try {
-      const response =await AuthAPI.forgetPassword(email);
-      return  response
+      const response = await AuthAPI.forgetPassword(email);
+      return response;
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        return rejectWithValue(
-          err.response?.data.message || "An error occurred"
-        );
-      } else if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      } else {
-        return rejectWithValue("An unknown error occurred");
-      }
+      return handleError(err, rejectWithValue);
     }
   }
 );
-
 
 export const verifyResetCode = createAsyncThunk(
   "auth/verifyResetCode",
   async (code: string, { rejectWithValue }) => {
     try {
-      const response =await AuthAPI.verifyResetCode(code);
-      return  response
+      const response = await AuthAPI.verifyResetCode(code);
+      return response;
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        return rejectWithValue(
-          err.response?.data.message || "An error occurred"
-        );
-      } else if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      } else {
-        return rejectWithValue("An unknown error occurred");
-      }
+      return handleError(err, rejectWithValue);
     }
   }
-)
+);

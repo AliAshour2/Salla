@@ -97,3 +97,24 @@ export const forgetPassword = createAsyncThunk(
     }
   }
 );
+
+
+export const verifyResetCode = createAsyncThunk(
+  "auth/verifyResetCode",
+  async (code: string, { rejectWithValue }) => {
+    try {
+      const response =await AuthAPI.verifyResetCode(code);
+      return  response
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(
+          err.response?.data.message || "An error occurred"
+        );
+      } else if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
+      }
+    }
+  }
+)

@@ -1,4 +1,5 @@
 import ForgetPassword from '@/components/AuthComponent/forgetPassword/ForgetPassword'
+import OtpComponent from '@/components/AuthComponent/VerifyResetCode/OtpComponent'
 import React from 'react'
 
 const Home = () => {
@@ -6,6 +7,8 @@ const Home = () => {
     <>Home
 
         <ForgetPassword/>
+
+        <OtpComponent/>
     </>
   )
 }

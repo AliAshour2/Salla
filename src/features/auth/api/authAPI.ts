@@ -44,4 +44,11 @@ export const AuthAPI = {
   },
 
 
+  verifyResetCode : async (code: string) => {
+    const response = await axios.post(`${API_URL_AUTH}/verifyResetCode`, {code});
+    return response.data;
+  },
+
+
+
 };

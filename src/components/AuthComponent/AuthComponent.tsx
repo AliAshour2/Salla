@@ -3,7 +3,7 @@ import SignUpComponent from "./SignUp/SignUpComponent";
 import SignInComponent from "./SignIn/SignInComponent";
 
 interface AuthComponentProps {
-  isSignIn: boolean; // Prop to decide the initial form
+  isSignIn: boolean; 
 }
 
 const AuthComponent: React.FC<AuthComponentProps> = ({ isSignIn: initialIsSignIn }) => {

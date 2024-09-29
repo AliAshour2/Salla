@@ -15,6 +15,7 @@ import { AppDispatch, RootState } from "@/app/store";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ShieldAlert, Terminal } from "lucide-react";
 import { useState } from "react";
+import { clearError } from "@/features/auth/slices/authSlice";
 
 
 const ForgetPassword = () => {
@@ -32,9 +33,16 @@ const ForgetPassword = () => {
     },
   });
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open) {
+      dispatch(clearError()); // Clear error when dialog opens
+    }
+  };
+
   return (
     <>
-      <AlertDialog open={isOpen} onOpenChange={setIsOpen}  >
+      <AlertDialog open={isOpen} onOpenChange={handleOpenChange}   >
         <AlertDialogTrigger className="text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
           Forgot password?
         </AlertDialogTrigger>

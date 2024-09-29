@@ -22,6 +22,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { clearError } from "@/features/auth/slices/authSlice";
 
 const OtpComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -49,9 +50,17 @@ const OtpComponent = () => {
     formik.submitForm();
   };
 
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open) {
+      dispatch(clearError()); // Clear error when dialog opens
+    }
+  };
+
   return (
     <>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogTrigger asChild>
           <Button variant="outline">Forgot Password</Button>
         </DialogTrigger>

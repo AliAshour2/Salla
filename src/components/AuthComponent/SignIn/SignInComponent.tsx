@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ShieldAlert } from "lucide-react";
 import { loginUser } from "@/features/auth/thunks/authThunks";
 import ForgetPassword from "../forgetPassword/ForgetPassword";
+import { clearError } from "@/features/auth/slices/authSlice";
 
 interface SignUpComponentProps {
   onSwitch: () => void;
@@ -29,6 +30,11 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
     },
   });
 
+  const handleSwitch = () => {
+    dispatch(clearError()); // Clear error when switching
+    onSwitch();
+  };
+
   return (
     <div className="animate-scale-up-center mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
       <div className="p-4 sm:p-7">
@@ -38,7 +44,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
           </p>
           <button
             className="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
-            onClick={onSwitch}
+            onClick={handleSwitch}
           >
             Sign up here
           </button>

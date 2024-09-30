@@ -17,19 +17,21 @@ import { ShieldAlert, Terminal } from "lucide-react";
 import { useState } from "react";
 import { clearError } from "@/features/auth/slices/authSlice";
 
-
 const ForgetPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { status, error  , message} = useSelector((state: RootState) => state.auth);
-  const [isOpen , setIsOpen] = useState(false);
+  const { status, error, message } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const [isOpen, setIsOpen] = useState(false);
   // const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  
+
   const forgetPasswordForm = useFormik({
     initialValues: { email: "" },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-       dispatch(forgetPassword(values.email));
-     
+      dispatch(forgetPassword(values.email));
+      forgetPasswordForm.resetForm();
+      setIsOpen(false);
     },
   });
 
@@ -42,7 +44,7 @@ const ForgetPassword = () => {
 
   return (
     <>
-      <AlertDialog open={isOpen} onOpenChange={handleOpenChange}   >
+      <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
         <AlertDialogTrigger className="text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
           Forgot password?
         </AlertDialogTrigger>

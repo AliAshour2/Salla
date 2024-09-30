@@ -8,7 +8,6 @@ interface AuthComponentProps {
 
 const AuthComponent: React.FC<AuthComponentProps> = ({ isSignIn: initialIsSignIn }) => {
   const [isSignIn, setIsSignIn] = useState(initialIsSignIn);
-
   const handleToggle = () => {
     setIsSignIn(!isSignIn);
   };

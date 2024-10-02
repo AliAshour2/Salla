@@ -23,6 +23,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { clearError } from "@/features/auth/slices/authSlice";
+import ErrorAlert from "@/components/shared/ErrorAlert";
 
 const OtpComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -111,6 +112,8 @@ const OtpComponent = () => {
               <AlertDescription>{message}</AlertDescription>
             </Alert>
           )}
+
+          
 
           {status == "succeeded" && message && (
             <Alert>

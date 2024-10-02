@@ -12,10 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { forgetPassword } from "@/features/auth/thunks/authThunks";
 import InputField from "./InputField";
 import { AppDispatch, RootState } from "@/app/store";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ShieldAlert, Terminal } from "lucide-react";
 import { useState } from "react";
 import { clearError } from "@/features/auth/slices/authSlice";
+import SuccessAlert from "@/components/shared/SuccessAlert";
+import ErrorAlert from "@/components/shared/ErrorAlert";
 
 const ForgetPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +31,6 @@ const ForgetPassword = () => {
     onSubmit: async (values) => {
       dispatch(forgetPassword(values.email));
       forgetPasswordForm.resetForm();
-      setIsOpen(false);
     },
   });
 
@@ -103,20 +102,11 @@ const ForgetPassword = () => {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
 
             {status == "succeeded" && message && (
-              <Alert>
-                <Terminal className="h-4 w-4" />
-                <AlertTitle>Heads up!</AlertTitle>
-                <AlertDescription>{message}</AlertDescription>
-              </Alert>
+              <SuccessAlert message={message} />
             )}
           </AlertDialogFooter>
-          {error && (
-            <Alert variant="destructive">
-              <ShieldAlert className="h-4 w-4" />
-              <AlertTitle>Error reset password!</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+
+          {error && <ErrorAlert title="Forgot password error!" error={error} />}
         </AlertDialogContent>
       </AlertDialog>
     </>

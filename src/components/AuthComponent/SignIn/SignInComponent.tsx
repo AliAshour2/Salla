@@ -4,11 +4,10 @@ import GoogleAuthButton from "@/components/ui/googleAuthButton";
 import InputField from "./InputField";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/store";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ShieldAlert } from "lucide-react";
 import { loginUser } from "@/features/auth/thunks/authThunks";
 import ForgetPassword from "../forgetPassword/ForgetPassword";
 import { clearError } from "@/features/auth/slices/authSlice";
+import ErrorAlert from "@/components/shared/ErrorAlert";
 
 interface SignUpComponentProps {
   onSwitch: () => void;
@@ -85,8 +84,8 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
                   touched={signInForm.touched.password}
                 />
 
-                <p   className="absolute inset-y-0 end-0">
-                  <ForgetPassword/>
+                <p className="absolute inset-y-0 end-0">
+                  <ForgetPassword />
                 </p>
               </div>
               <div className="flex items-center">
@@ -115,14 +114,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
                   "Sign in"
                 )}
               </button>
-
-              {error && (
-                <Alert  variant="destructive">
-                  <ShieldAlert className="h-4 w-4" />
-                  <AlertTitle>Sign in error!</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
+              {error && <ErrorAlert title="Sign in error!" error={error} />}
             </div>
           </form>
         </div>

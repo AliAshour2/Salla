@@ -4,10 +4,8 @@ import InputField from "./InputField";
 import { validationSchema } from "./validationSchemas";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/store";
-
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ShieldAlert } from "lucide-react";
 import { registerUser } from "@/features/auth/thunks/authThunks";
+import ErrorAlert from "@/components/shared/ErrorAlert";
 
 
 interface SignUpComponentProps {
@@ -137,13 +135,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
                   "Sign Up"
                 )}
               </button>
-              {error && (
-                <Alert variant="destructive">
-                  <ShieldAlert className="h-4 w-4" />
-                  <AlertTitle>Sign Up error!</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
+              {error && <ErrorAlert title="Sign Up error!" error={error} />}
             </div>
           </form>
         </div>

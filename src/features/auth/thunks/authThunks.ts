@@ -12,7 +12,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await AuthAPI.login(credentials);
       dispatch(setToken(response.data));
-      return response;
+      return response.data;
     } catch (err) {
       return handleError(err, rejectWithValue);
     }
@@ -32,7 +32,7 @@ export const registerUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      return await AuthAPI.register(reqBody);
+      return AuthAPI.register(reqBody);
     } catch (err) {
       return handleError(err, rejectWithValue);
     }
@@ -47,7 +47,7 @@ export const updateLoggedUserData = createAsyncThunk(
   ) => {
     try {
       const response = await AuthAPI.updateLoggedUserData(credentials);
-      return response;
+      return response.data;
     } catch (err) {
       return handleError(err, rejectWithValue);
     }
@@ -59,7 +59,7 @@ export const forgetPassword = createAsyncThunk(
   async (email: string, { rejectWithValue }) => {
     try {
       const response = await AuthAPI.forgetPassword(email);
-      return response;
+      return response.data;
     } catch (err) {
       return handleError(err, rejectWithValue);
     }
@@ -71,7 +71,7 @@ export const verifyResetCode = createAsyncThunk(
   async (code: string, { rejectWithValue }) => {
     try {
       const response = await AuthAPI.verifyResetCode(code);
-      return response;
+      return response.data;
     } catch (err) {
       return handleError(err, rejectWithValue);
     }

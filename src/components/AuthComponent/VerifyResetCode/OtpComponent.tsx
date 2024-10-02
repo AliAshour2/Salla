@@ -11,9 +11,6 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { validationSchema } from "./validationSchema";
 import { useRef, useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { Terminal } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -24,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { clearError } from "@/features/auth/slices/authSlice";
 import ErrorAlert from "@/components/shared/ErrorAlert";
+import SuccessAlert from "@/components/shared/SuccessAlert";
 
 const OtpComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,7 +49,6 @@ const OtpComponent = () => {
     formik.submitForm();
   };
 
-
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (open) {
@@ -72,7 +69,12 @@ const OtpComponent = () => {
               Enter the 4-digit code sent to your email to reset your password.
             </DialogDescription>
           </DialogHeader>
-          <form className="mx-auto" onSubmit={formik.handleSubmit} ref={formRef} action="">
+          <form
+            className="mx-auto"
+            onSubmit={formik.handleSubmit}
+            ref={formRef}
+            action=""
+          >
             <InputOTP
               value={formik.values.otp}
               onChange={handleOtpChange}
@@ -105,22 +107,9 @@ const OtpComponent = () => {
             )}
           </Button>
 
-          {error && (
-            <Alert variant="destructive">
-              <ExclamationTriangleIcon className="h-4 w-4" />
-              <AlertTitle>Error Verfication Code</AlertTitle>
-              <AlertDescription>{message}</AlertDescription>
-            </Alert>
-          )}
-
-          
-
+          {error && <ErrorAlert title="Sign Up error!" error={error} />}
           {status == "succeeded" && message && (
-            <Alert>
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Heads up!</AlertTitle>
-              <AlertDescription>{message}</AlertDescription>
-            </Alert>
+            <SuccessAlert message={message} />
           )}
         </DialogContent>
       </Dialog>

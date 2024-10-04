@@ -1,16 +1,11 @@
-import ForgetPassword from '@/components/AuthComponent/forgetPassword/ForgetPassword'
-import OtpComponent from '@/components/AuthComponent/VerifyResetCode/OtpComponent'
-import React from 'react'
+import MainSlider from "@/components/Home/MainSlider/MainSlider";
 
 const Home = () => {
   return (
-    <>Home
-
-        <ForgetPassword/>
-
-        <OtpComponent/>
+    <>
+      <MainSlider />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

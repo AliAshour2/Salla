@@ -86,7 +86,8 @@ export default {
   },
   plugins: [
     require('preline/plugin'),
-      require("tailwindcss-animate")
+      require("tailwindcss-animate"),
+	  require('@tailwindcss/aspect-ratio'),
 ],
 }
 

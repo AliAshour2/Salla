@@ -3,7 +3,6 @@
         "home": "Home",
         "categoriesDrop": "Categories",
         "categories": {
-            
             "1": "Women's Fashion",
             "2": "Men's Fashion",
             "3": "Electronics",
@@ -13,6 +12,25 @@
         "logout": "Logout",
         "login": "Login",
         "signup": "Signup"
-        
+    },
+    "mainSlider": {
+        "items": [
+            {
+                "id": 1,
+                "badgeText": "Opening Sale Discount 50%",
+                "title": "SuperMarket For Fresh Grocery",
+                "description": "New model for online grocery shopping and delivery.",
+                "link": "/shop",
+                "ActionButtonText": "Shop Now"
+            },
+            {
+                "id": 2,
+                "badgeText": "Fresh Arrivals",
+                "title": "Organic Fruits and Vegetables",
+                "description": "Get fresh organic produce delivered to your door.",
+                "link": "/shop/organic",
+                "ActionButtonText": "View More"
+            }
+        ]
     }
 }

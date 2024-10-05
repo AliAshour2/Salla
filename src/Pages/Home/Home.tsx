@@ -3,7 +3,9 @@ import MainSlider from "@/components/Home/MainSlider/MainSlider";
 const Home = () => {
   return (
     <>
-      <MainSlider />
+      <div className="container mx-auto">
+        <MainSlider />
+      </div>
     </>
   );
 };

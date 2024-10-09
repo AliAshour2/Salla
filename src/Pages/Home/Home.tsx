@@ -1,3 +1,4 @@
+import BrandsMarqueeComponent from "@/components/Home/BrandsMarquee/BrandsMarqueeComponent";
 import MainSlider from "@/components/Home/MainSlider/MainSlider";
 
 const Home = () => {
@@ -5,6 +6,7 @@ const Home = () => {
     <>
       <div className="container mx-auto">
         <MainSlider />
+        <BrandsMarqueeComponent/>
       </div>
     </>
   );

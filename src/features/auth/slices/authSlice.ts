@@ -103,3 +103,4 @@ const authSlice = createSlice({
 export const selectIsLoggedIn = (state: RootState) => !!state.auth.token;
 export const { logout, setToken , clearError  } = authSlice.actions;
 export default authSlice.reducer;
+

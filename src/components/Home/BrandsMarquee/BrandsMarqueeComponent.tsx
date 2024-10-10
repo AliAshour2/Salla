@@ -1,19 +1,11 @@
 import Marquee from "react-fast-marquee";
-
 import MarqueeItem from "./MarqueeItem";
 import MarqueeItemSkeleton from "@/components/skeletons/MarqueeItemSkeleton";
-
 import { TBrand } from "@/types";
-import { useQuery } from "@tanstack/react-query";
-import { GetAllBrandsAPI } from "@/services/api/GetAllBrands";
+import { useBrandsQuery } from "@/hooks/useBrands";
 
 const BrandsMarqueeComponent = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["brands"],
-    queryFn: () => GetAllBrandsAPI(),
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-  });
+  const { data, isLoading, isError } = useBrandsQuery();
 
   if (isLoading || isError) {
     return (

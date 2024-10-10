@@ -1,236 +1,179 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import AuthComponent from "../AuthComponent/AuthComponent";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "@/features/auth/slices/authSlice";
-import AccountAvatar from "./AccountAvatar";
-import Modal from "./Modal";
-import { Heart, ShoppingCart } from "lucide-react";
-import { toast } from "sonner";
-import { Button } from "../ui/button";
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useSelector } from "react-redux"
+import { Heart, ShoppingCart, ChevronDown, Menu, X } from "lucide-react"
+import { toast } from "sonner"
 
-const Navbar = () => {
-  const { t, i18n } = useTranslation();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(true);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+import AuthComponent from "../AuthComponent/AuthComponent"
+import Modal from "./Modal"
 
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+import { selectIsLoggedIn } from "@/features/auth/slices/authSlice"
+
+export default function Navbar() {
+  const { t } = useTranslation()
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [isSignIn, setIsSignIn] = useState(true)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+
+  const closeModal = () => setModalOpen(false)
   const openSignInModal = () => {
-    setIsSignIn(true);
-    setModalOpen(true);
-  };
-
+    setIsSignIn(true)
+    setModalOpen(true)
+  }
   const openSignUpModal = () => {
-    setIsSignIn(false);
-    setModalOpen(true);
-  };
+    setIsSignIn(false)
+    setModalOpen(true)
+  }
 
   const handleClickOnWishList = () => {
     if (!isLoggedIn) {
-      toast.error("Please login first");
-      openSignInModal();
+      toast.error("Please login first")
+      openSignInModal()
     }
-  };
+  }
 
   const handleClickOnCart = () => {
     if (!isLoggedIn) {
-      toast.error("Please login first");
-      openSignInModal();
+      toast.error("Please login first")
+      openSignInModal()
     }
-  };
-
-  interface Category {
-    id: number;
-    name: string;
   }
 
-  const categories: Category[] = [
+  const categories = [
     { id: 1, name: t("navbar.categories.1") },
     { id: 2, name: t("navbar.categories.2") },
     { id: 3, name: t("navbar.categories.3") },
     { id: 4, name: t("navbar.categories.4") },
-  ];
+  ]
 
   return (
-    <>
-      {/* ========== HEADER ========== */}
-      <header className="flex flex-wrap py-2 md:justify-start md:flex-nowrap z-50 w-full bg-white border-b border-gray-200">
-        <nav className="relative max-w-[85rem] w-full mx-auto md:flex md:items-center md:justify-between md:gap-3 py-2 px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center gap-x-1">
-            <a
-              className="flex-none font-semibold text-xl text-black focus:outline-none focus:opacity-80"
-              href="#"
-              aria-label="Brand"
-            >
+    <header className="w-full bg-background border-b">
+      <div className="container mx-auto px-4">
+        <nav className="flex items-center justify-between py-4">
+          <div className="flex items-center">
+            <a href="#" className="text-2xl font-bold text-foreground">
               Salla
             </a>
-            {/* Collapse Button */}
-            <button
-              type="button"
-              className="hs-collapse-toggle md:hidden relative size-9 flex justify-center items-center font-medium text-[12px] rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
-              id="hs-header-base-collapse"
-              aria-expanded="false"
-              aria-controls="hs-header-base"
-              aria-label="Toggle navigation"
-              data-hs-collapse="#hs-header-base"
-            >
-              <svg
-                className="hs-collapse-open:hidden size-4"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1={3} x2={21} y1={6} y2={6} />
-                <line x1={3} x2={21} y1={12} y2={12} />
-                <line x1={3} x2={21} y1={18} y2={18} />
-              </svg>
-              <svg
-                className="hs-collapse-open:block shrink-0 hidden size-4"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
-              <span className="sr-only">Toggle navigation</span>
-            </button>
-            {/* End Collapse Button */}
           </div>
-          {/* Collapse */}
-          <div
-            id="hs-header-base"
-            className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block "
-            aria-labelledby="hs-header-base-collapse"
-          >
-            <div className="overflow-hidden overflow-y-auto max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
-              <div className="py-2 md:py-0  flex flex-col md:flex-row md:items-center gap-0.5 md:gap-1">
-                <div className="grow md:flex md:justify-center">
-                  <div className="flex flex-col md:flex-row md:justify-end md:items-center gap-0.5 md:gap-1">
-                    <a
-                      className="p-2 flex items-center text-sm bg-gray-100 text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100"
-                      href="#"
-                      aria-current="page"
-                    >
-                      {t("navbar.home")}
-                    </a>
-                    {/* Dropdown */}
-                    <div className="hs-dropdown [--strategy:static] md:[--strategy:fixed] [--adaptive:none] [--is-collapse:true] md:[--is-collapse:false] ">
-                      <button
-                        id="hs-header-base-dropdown"
-                        type="button"
-                        className="hs-dropdown-toggle w-full p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100"
-                        aria-haspopup="menu"
-                        aria-expanded="false"
-                        aria-label="Dropdown"
-                      >
-                        {t("navbar.categoriesDrop")}
-                        <i className=" ml-1 fa-solid fa-caret-down"></i>
-                      </button>
-                      <div
-                        className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 relative w-full md:w-52 hidden z-10 top-full ps-7 md:ps-0 md:bg-white md:rounded-lg md:shadow-md before:absolute before:-top-4 before:start-0 before:w-full before:h-5 md:after:hidden after:absolute after:top-1 after:start-[18px] after:w-0.5 after:h-[calc(100%-0.25rem)] after:bg-gray-100"
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="hs-header-base-dropdown"
-                      >
-                        <div className="py-1 md:px-1 space-y-0.5">
-                          {categories.map((category) => (
-                            <a
-                              className="p-2 md:px-3 flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                              href="#"
-                            >
-                              {category.name}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    {/* End Dropdown */}
-                    <a
-                      className="p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100"
-                      href="#"
-                    >
-                      Account
-                    </a>
-                  </div>
-                </div>
 
-                {/* Button Group */}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            <a href="#" className="text-foreground hover:text-primary">
+              {t("navbar.home")}
+            </a>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="p-0">
+                  {t("navbar.categoriesDrop")} <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {categories.map((category) => (
+                  <DropdownMenuItem key={category.id}>
+                    {category.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <a href="#" className="text-foreground hover:text-primary">
+              Account
+            </a>
+          </div>
 
-                <div className="flex gap-2 mr-2 mt-2">
-                  <Button
-                    onClick={handleClickOnWishList}
-                    variant="ghost"
-                    size="icon"
-                    className="relative"
-                  >
-                    <Heart/>
-                    <span className="absolute -top-0.5 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
-                      5
-                    </span>
-                  </Button>
-
-                  <Button
-                    onClick={handleClickOnCart}
-                    variant="ghost"
-                    size="icon"
-                    className="relative"
-                  >
-                    <ShoppingCart />
-
-                    <span className="absolute -top-0.5 -right-1 h-4 w-4 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
-                      5
-                    </span>
-                  </Button>
-                </div>
-                {isLoggedIn ? (
-                  <AccountAvatar />
-                ) : (
-                  <div className=" flex flex-wrap items-center gap-x-1.5">
-                    <button
-                      className="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-100"
-                      onClick={openSignInModal}
-                    >
-                      {t("navbar.login")}
-                    </button>
-                    <button
-                      className="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                      onClick={openSignUpModal}
-                    >
-                      {t("navbar.signup")}
-                    </button>
-                  </div>
-                )}
-                {/* End Button Group */}
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" size="icon" onClick={handleClickOnWishList} className="relative">
+              <Heart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
+                5
+              </span>
+            </Button>
+            <Button variant="ghost" size="icon" onClick={handleClickOnCart} className="relative">
+              <ShoppingCart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
+                5
+              </span>
+            </Button>
+            {isLoggedIn ? (
+              <Avatar>
+                <AvatarImage src="/placeholder.svg" alt="User" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+            ) : (
+              <div className="hidden md:flex items-center space-x-2">
+                <Button variant="ghost" onClick={openSignInModal}>
+                  {t("navbar.login")}
+                </Button>
+                <Button onClick={openSignUpModal}>
+                  {t("navbar.signup")}
+                </Button>
               </div>
-            </div>
+            )}
+
+            {/* Mobile Menu */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <nav className="flex flex-col space-y-4">
+                  <a href="#" className="text-foreground hover:text-primary">
+                    {t("navbar.home")}
+                  </a>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="justify-start p-0">
+                        {t("navbar.categoriesDrop")} <ChevronDown className="ml-1 h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {categories.map((category) => (
+                        <DropdownMenuItem key={category.id}>
+                          {category.name}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <a href="#" className="text-foreground hover:text-primary">
+                    Account
+                  </a>
+                  {!isLoggedIn && (
+                    <>
+                      <Button variant="ghost" onClick={openSignInModal}>
+                        {t("navbar.login")}
+                      </Button>
+                      <Button onClick={openSignUpModal}>
+                        {t("navbar.signup")}
+                      </Button>
+                    </>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
-          {/* End Collapse */}
         </nav>
-      </header>
-      {/* ========== END HEADER ========== */}
-      {/* Modal */}
+      </div>
+
+      {/* Auth Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AuthComponent isSignIn={isSignIn} />
       </Modal>
-    </>
-  );
-};
-
-export default Navbar;
+    </header>
+  )
+}

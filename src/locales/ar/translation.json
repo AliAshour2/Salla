@@ -32,5 +32,39 @@
         "ActionButtonText": "عرض المزيد"
       }
     ]
+  },
+  "signin": {
+    "noAccount": "ليس لديك حساب بعد؟",
+    "signUpHere": "سجل هنا",
+    "Or": "أو",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "rememberMe": "تذكرني",
+    "signIn": "تسجيل الدخول",
+    "signInError": "خطأ في تسجيل الدخول!"
+  },
+  "forgetPassword": {
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "rememberPassword": "تتذكر كلمة المرور؟",
+    "signInHere": "تسجيل الدخول هنا",
+    "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "continue": "استمر",
+    "cancel": "إلغاء",
+    "error": "خطأ في استعادة كلمة المرور!"
+  },
+  "signup": {
+    "title": "سجل",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "signInHere": "تسجيل الدخول هنا",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "phone": "الهاتف",
+    "terms": "أقبل",
+    "termsLink": "الشروط والأحكام",
+    "signUp": "سجل",
+    "error": "خطأ في التسجيل!"
   }
 }

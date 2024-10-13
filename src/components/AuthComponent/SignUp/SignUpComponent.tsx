@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/store";
 import { registerUser } from "@/features/auth/thunks/authThunks";
 import ErrorAlert from "@/components/shared/ErrorAlert";
+import { useTranslation } from "react-i18next";
 
 
 interface SignUpComponentProps {
@@ -14,6 +15,7 @@ interface SignUpComponentProps {
 
 const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
   const { status, error } = useSelector((state: RootState) => state.auth);
 
   const registerForm = useFormik({
@@ -35,14 +37,14 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
     <div className="animate-scale-up-center mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
       <div className="p-4 sm:p-7">
         <div className="text-center">
-          <h1 className="block text-2xl font-bold text-gray-800">Sign up</h1>
+          <h1 className="block text-2xl font-bold text-gray-800">{t("signup.title")}</h1>
           <p className="mt-2 text-sm text-gray-600">
-            Already have an account?
+          {t("signup.alreadyHaveAccount")}
             <button
               className="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
               onClick={onSwitch}
             >
-              Sign in here
+   {t("signup.signInHere")}
             </button>
           </p>
         </div>
@@ -55,7 +57,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
             <div className="grid  gap-y-4">
               <InputField
                 id="name"
-                label="Name"
+                label={t("signup.name")}
                 name="name"
                 type="text"
                 value={registerForm.values.name}
@@ -66,7 +68,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
               />
               <InputField
                 id="email"
-                label="Email address"
+                label={t("signup.email")}
                 name="email"
                 type="email"
                 value={registerForm.values.email}
@@ -77,7 +79,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
               />
               <InputField
                 id="password"
-                label="Password"
+                label={t("signup.password")}
                 name="password"
                 type="password"
                 value={registerForm.values.password}
@@ -88,7 +90,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
               />
               <InputField
                 id="rePassword"
-                label="Confirm Password"
+                label={t("signup.confirmPassword")}
                 name="rePassword"
                 type="password"
                 value={registerForm.values.rePassword}
@@ -99,7 +101,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
               />
               <InputField
                 id="phone"
-                label="Phone"
+                label={t("signup.phone")}
                 name="phone"
                 type="tel"
                 value={registerForm.values.phone}
@@ -116,12 +118,12 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
                   className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor="remember-me" className="ms-3 text-sm">
-                  I accept the{" "}
+                {t("signup.terms")}{" "}
                   <a
                     className="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
                     href="#"
                   >
-                    Terms and Conditions
+                     {t("signup.termsLink")}
                   </a>
                 </label>
               </div>
@@ -132,7 +134,7 @@ const SignUpComponent = ({ onSwitch }: SignUpComponentProps) => {
                 {status === "loading" ? (
                   <i className="fa fa-spinner fa-spin"></i>
                 ) : (
-                  "Sign Up"
+                  t("signup.signUp")
                 )}
               </button>
               {error && <ErrorAlert title="Sign Up error!" error={error} />}

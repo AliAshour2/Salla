@@ -16,9 +16,11 @@ import { useState } from "react";
 import { clearError } from "@/features/auth/slices/authSlice";
 import SuccessAlert from "@/components/shared/SuccessAlert";
 import ErrorAlert from "@/components/shared/ErrorAlert";
+import { useTranslation } from "react-i18next";
 
 const ForgetPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
   const { status, error, message } = useSelector(
     (state: RootState) => state.auth
   );
@@ -45,22 +47,22 @@ const ForgetPassword = () => {
     <>
       <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
         <AlertDialogTrigger className="text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
-          Forgot password?
+        {t("forgetPassword.forgotPassword")}
         </AlertDialogTrigger>
         <AlertDialogContent>
           <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
             <div className="p-4 sm:p-7">
               <div className="text-center">
                 <h2 className="block text-2xl font-bold text-gray-800">
-                  Forgot password?
+                {t("forgetPassword.forgotPassword")}
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">
-                  Remember your password?
+                {t("forgetPassword.rememberPassword")}
                   <Link
                     to={""}
                     className="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
                   >
-                    Sign in here
+                    {t("forgetPassword.signInHere")}
                   </Link>
                 </p>
               </div>
@@ -72,7 +74,7 @@ const ForgetPassword = () => {
                     <InputField
                       id="email"
                       name="email"
-                      label="email"
+                      label={t("forgetPassword.email")}
                       type="email"
                       placeholder="Enter your email"
                       onChange={forgetPasswordForm.handleChange}
@@ -89,7 +91,7 @@ const ForgetPassword = () => {
                       {status == "loading" ? (
                         <i className="fa fa-spinner fa-spin"></i>
                       ) : (
-                        "Continue"
+                        t("forgetPassword.continue")
                       )}
                     </button>
                   </div>
@@ -99,7 +101,7 @@ const ForgetPassword = () => {
             </div>
           </div>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("forgetPassword.cancel")}</AlertDialogCancel>
 
             {status == "succeeded" && message && (
               <SuccessAlert message={message} />

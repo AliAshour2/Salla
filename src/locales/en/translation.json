@@ -33,4 +33,39 @@
             }
         ]
     }
+    ,
+    "signin": {
+    "noAccount": "Don't have an account yet?",
+    "signUpHere": "Sign up here",
+    "Or": "Or",
+    "email": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "signIn": "Sign in",
+    "signInError": "Sign in error!"
+  }
+  ,"forgetPassword": {
+    "forgotPassword": "Forgot password?",
+    "rememberPassword": "Remember your password?",
+    "signInHere": "Sign in here",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "error": "Forgot password error!"
+  },
+  "signup": {
+    "title": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInHere": "Sign in here",
+    "name": "Name",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phone": "Phone",
+    "terms": "I accept the",
+    "termsLink": "Terms and Conditions",
+    "signUp": "Sign Up",
+    "error": "Sign Up error!"
+  }
 }

@@ -8,6 +8,7 @@ import { loginUser } from "@/features/auth/thunks/authThunks";
 import ForgetPassword from "../forgetPassword/ForgetPassword";
 import { clearError } from "@/features/auth/slices/authSlice";
 import ErrorAlert from "@/components/shared/ErrorAlert";
+import { useTranslation } from "react-i18next";
 
 interface SignUpComponentProps {
   onSwitch: () => void;
@@ -16,6 +17,7 @@ interface SignUpComponentProps {
 const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { status, error } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation();
 
   const signInForm = useFormik({
     initialValues: {
@@ -39,20 +41,20 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
       <div className="p-4 sm:p-7">
         <div className="text-center">
           <p className="mt-2 text-sm text-gray-600">
-            Don't have an account yet?
+           {t("signin.noAccount")}
           </p>
           <button
             className="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
             onClick={handleSwitch}
           >
-            Sign up here
+            {t("signin.signUpHere")}
           </button>
         </div>
         <div className="mt-5">
           <GoogleAuthButton />
 
           <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">
-            Or
+          {t("signin.Or")}
           </div>
 
           <form onSubmit={signInForm.handleSubmit}>
@@ -60,7 +62,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
               <InputField
                 id="email"
                 name="email"
-                label="Email"
+                label={t("signin.email")}
                 type="email"
                 placeholder="Email"
                 onChange={signInForm.handleChange}
@@ -74,7 +76,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
                 <InputField
                   id="password"
                   name="password"
-                  label="Password"
+                  label={t("signin.password")}
                   type="password"
                   placeholder="Password"
                   onChange={signInForm.handleChange}
@@ -99,7 +101,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
                 </div>
                 <div className="ms-3">
                   <label htmlFor="remember-me" className="text-sm">
-                    Remember me
+                  {t("signin.rememberMe")}
                   </label>
                 </div>
               </div>
@@ -111,7 +113,7 @@ const SignInComponent = ({ onSwitch }: SignUpComponentProps) => {
                 {status === "loading" ? (
                   <i className="fa fa-spinner fa-spin"></i>
                 ) : (
-                  "Sign in"
+                  t("signin.signIn")
                 )}
               </button>
               {error && <ErrorAlert title="Sign in error!" error={error} />}

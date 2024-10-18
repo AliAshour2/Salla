@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <div className="container mx-auto">
         <MainSlider />
-        <BrandsMarqueeComponent/>
+        <BrandsMarqueeComponent />     
       </div>
     </>
   );

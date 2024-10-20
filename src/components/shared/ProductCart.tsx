@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import StarRating from "./StarRaring";
+
 import {
   Tooltip,
   TooltipContent,
@@ -7,34 +7,28 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { TproductCartProps } from "@/types";
+import StarRating from "./StarRaring";
 
-const ProductCart = ({
-  _id,
-  title,
-  category,
-  imageCover,
-  price,
-  rating,
-}: TproductCartProps) => {
-  const handleAddToCart = () => {
-    
-    console.log(`Added product ${_id} to cart`);
-  };
+// Destructure product inside props
+interface ProductCartProps {
+  product: TproductCartProps;
+}
 
+const ProductCart = ({ product }: ProductCartProps) => {
   return (
     <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm">
       <div className="text-center">
-        <Link to={`details/${_id}`}>
+        <Link to={`details/${product._id}`}>
           <img
-            src={imageCover}
-            alt={title}
+            src={product.imageCover}
+            alt={product.title}
             className="w-full h-auto rounded"
             onError={(e) => {
               e.currentTarget.src = "/path/to/placeholder/image.jpg"; // Placeholder image
             }}
           />
         </Link>
-        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -69,37 +63,44 @@ const ProductCart = ({
         </div>
       </div>
 
+      {/* Product Title with Tooltip */}
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger>
             <div className="text-sm my-1 mt-2">
-              <Link to={`details/${_id}`} className="text-gray-500">
-                {title.split(" ").slice(0, 2).join(" ")}
+              <Link to={`details/${product._id}`} className="text-gray-500">
+                {product.title.split(" ").slice(0, 2).join(" ")}
               </Link>
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{title}</p>
+            <p>{product.title}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
+     
       <h3 className="text-lg">
-        <Link to={`details/${_id}`} className="text-black text-decoration-none">
-          {category}
+        <Link to={`details/${product._id}`} className="text-black text-decoration-none">
+          {product.category?.name} 
         </Link>
       </h3>
+
+      {/* Ratings Section */}
       <div className="text-yellow-500">
         <small>
-          <StarRating rating={rating} />
+          <StarRating rating={product.ratingsAverage} />
         </small>
-        <span className="text-gray-500 text-sm px-2">{rating}</span>
+        <span className="text-gray-500 text-sm px-2">
+          {product.ratingsAverage} / 5 ({product.ratingsQuantity})
+        </span>
       </div>
+
+      {/* Price and Add to Cart Button */}
       <div className="flex items-center justify-between mt-3">
-        <div className="text-black">{price} EGY</div>
+        <div className="text-black">{product.price} EGY</div>
         <button
-          className="p-2 text-white bg-green-400 rounded"
-          onClick={handleAddToCart}
+          className="p-2 text-white bg-green-500 rounded"
           aria-label="Add to cart"
         >
           Add+

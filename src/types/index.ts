@@ -7,7 +7,7 @@ export type TBrand = {
     updatedAt: string;
   };
 
-
+  
 
   export type TproductCartProps = {
     _id: string;
@@ -17,6 +17,24 @@ export type TBrand = {
     sold: number;
     rating: number;
     category: string;
+    name: string;
     ratingsAverage: number;
     ratingsQuantity: number;
   }
+
+
+  export type TGetAllProductsParamsProps = {
+    priceGte?: number;
+    priceLte?: number;
+    limit?: number;
+    page?: number;
+    sort?: string;
+    fields?: string;
+    keyword?: string;
+    brand?: string;
+    categories?: string[];
+  }
+
+
+
+  

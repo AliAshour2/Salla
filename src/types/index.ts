@@ -16,7 +16,12 @@ export type TBrand = {
     price: number;
     sold: number;
     rating: number;
-    category: string;
+    category: {
+      _id: string; 
+      name: string; 
+      slug: string;
+      image:string
+    };
     name: string;
     ratingsAverage: number;
     ratingsQuantity: number;
@@ -33,6 +38,7 @@ export type TBrand = {
     keyword?: string;
     brand?: string;
     categories?: string[];
+    categoryIn?:string;
   }
 
 

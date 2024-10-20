@@ -1,5 +1,6 @@
 import SectionSlider from "@/components/shared/SectionSlider";
 import ProductCardSkeleton from "@/components/skeletons/ProductCartSkelton";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useGetAllProductsQuery } from "@/services/api/GetAllProductsApi/GetAllProductsApi";
 
 const FeaturedProductSlider = () => {
@@ -7,14 +8,27 @@ const FeaturedProductSlider = () => {
   const { data, error, isLoading } = useGetAllProductsQuery({
     limit: 10,
   });
+  const products = data?.data || [];
 
-  if (isLoading) {
-    return (
-      <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <ProductCardSkeleton key={index} />
+ 
+  if(isLoading)
+  {
+    return(
+      <Carousel className="w-full max-sm:px-3">
+        <CarouselContent className="-ml-1">
+              
+        {Array.from({ length: 10 }).map((_, index) => ( // Adjust the number of skeletons as needed
+          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/5">
+            <div className="flex space-x-2 p-1">
+              <ProductCardSkeleton  />
+            </div>
+          </CarouselItem>
         ))}
-      </div>
+            
+        </CarouselContent>
+        <CarouselPrevious className="max-sm:left-6" />
+        <CarouselNext className="max-sm:right-6" />
+      </Carousel>
     );
   }
 
@@ -23,15 +37,9 @@ const FeaturedProductSlider = () => {
     return <div>Error fetching products!</div>;
   }
 
-  
-  const products = data?.data || []; 
-
   return (
     <div>
-      <SectionSlider 
-        title="Featured Products"
-        products={products}
-      />
+      <SectionSlider title="Featured Products" products={products} />
     </div>
   );
 };

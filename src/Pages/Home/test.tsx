@@ -1,6 +1,6 @@
 // src/components/Products.tsx
 
-import { useGetAllProductsQuery } from '@/services/api/GetAllProductsApi/GetAllProductsApi';
+import { useGetAllProductsQuery } from '@/services/api/ProductsApi/ProductsApi';
 import { TproductCartProps } from '@/types';
 
 const Products = () => {

@@ -3,10 +3,11 @@ import ProductCardSkeleton from "@/components/skeletons/ProductCartSkelton";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useGetAllProductsQuery } from "@/services/api/ProductsApi/ProductsApi";
 
-const FeaturedProductSlider = () => {
+const ElectronicProductSlider = () => {
   // Fetch products with a limit of 10
   const { data, error, isLoading } = useGetAllProductsQuery({
     limit: 10,
+    categoryIn : ["6439d2d167d9aa4ca970649f"],
   });
   const products = data?.data || [];
 
@@ -39,9 +40,9 @@ const FeaturedProductSlider = () => {
 
   return (
     <div>
-      <SectionSlider title="Featured Products" products={products} />
+      <SectionSlider title="Electronic Products" products={products} />
     </div>
   );
 };
 
-export default FeaturedProductSlider;
+export default ElectronicProductSlider;

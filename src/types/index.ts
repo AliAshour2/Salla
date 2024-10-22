@@ -22,6 +22,10 @@ export type TBrand = {
       slug: string;
       image:string
     };
+    brand:{
+      id :string;
+      name: string
+    }
     name: string;
     ratingsAverage: number;
     ratingsQuantity: number;

@@ -1,5 +1,7 @@
 import { Base_URL } from '@/constants';
+import { TproductCartProps } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 
 // Define the API service
 export const productsApi = createApi({
@@ -41,8 +43,11 @@ export const productsApi = createApi({
         };
       },
     }),
+    getSpecificProduct: builder.query<TproductCartProps, string>({
+      query: (id) => `/api/v1/products/${id}`,
+    })
   }),
 });
 
 // Export the hook for the API query
-export const { useGetAllProductsQuery } = productsApi;
+export const { useGetAllProductsQuery , useGetSpecificProductQuery } = productsApi;

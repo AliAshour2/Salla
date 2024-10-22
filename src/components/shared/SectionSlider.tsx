@@ -13,6 +13,7 @@ interface SectionSliderProps {
   products: TproductCartProps[] | undefined;
 }
 
+
 const SectionSlider = ({ title, products }: SectionSliderProps) => {
   const productList = products ?? [];
 
@@ -44,3 +45,4 @@ const SectionSlider = ({ title, products }: SectionSliderProps) => {
 };
 
 export default SectionSlider;
+

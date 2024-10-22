@@ -23,6 +23,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
             src={product.imageCover}
             alt={product.title}
             className="w-full h-auto rounded"
+            loading="lazy"
             onError={(e) => {
               e.currentTarget.src = "/path/to/placeholder/image.jpg"; // Placeholder image
             }}
@@ -64,27 +65,29 @@ const ProductCart = ({ product }: ProductCartProps) => {
       </div>
 
       {/* Product Title with Tooltip */}
+      <Link
+        to={`details/${product._id}`}
+        className="text-black text-decoration-none block"
+      >
+        {product.category?.name}
+      </Link>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger>
-            <div className="text-sm my-1 mt-2">
-              <Link to={`details/${product._id}`} className="text-gray-500">
-                {product.title.split(" ").slice(0, 2).join(" ")}
-              </Link>
-            </div>
+            <h5 className="text-md font-bold text-gray-800 text-start">
+              <span className="mr-2">{product.brand.name}</span>
+              <span className=" my-1 mt-2">
+                <Link to={`details/${product._id}`} className="">
+                  {product.title.split(" ").slice(0, 2).join(" ")}
+                </Link>
+              </span>
+            </h5>
           </TooltipTrigger>
           <TooltipContent>
             <p>{product.title}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-
-     
-      <h3 className="text-lg">
-        <Link to={`details/${product._id}`} className="text-black text-decoration-none">
-          {product.category?.name} 
-        </Link>
-      </h3>
 
       {/* Ratings Section */}
       <div className="text-yellow-500">
@@ -100,7 +103,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
       <div className="flex items-center justify-between mt-3">
         <div className="text-black">{product.price} EGY</div>
         <button
-          className="p-2 text-white bg-green-500 rounded"
+          className="p-2 text-white bg-green-500 hover:bg-green-600 rounded"
           aria-label="Add to cart"
         >
           Add+

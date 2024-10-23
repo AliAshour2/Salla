@@ -33,12 +33,13 @@ const ProductCart = ({ product }: ProductCartProps) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <button
+                <Link
+                  to={`details/${product._id}`}
                   className="px-2 py-1 rounded-lg bg-white text-gray-500 hover:text-white hover:bg-green-500"
                   aria-label="Show Product"
                 >
                   <i className="fa-regular fa-eye"></i>
-                </button>
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Show Product</p>

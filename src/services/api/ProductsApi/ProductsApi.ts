@@ -1,5 +1,5 @@
 import { Base_URL } from '@/constants';
-import { TproductCartProps } from '@/types';
+import { GetSpecificProductResponse, TproductCartProps } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
@@ -45,6 +45,7 @@ export const productsApi = createApi({
     }),
     getSpecificProduct: builder.query<TproductCartProps, string>({
       query: (id) => `/api/v1/products/${id}`,
+      transformResponse: (response: GetSpecificProductResponse) => response.data,
     })
   }),
 });

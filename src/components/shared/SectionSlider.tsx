@@ -33,7 +33,7 @@ const SectionSlider = ({ title, products }: SectionSliderProps) => {
                 </div>
               </CarouselItem>
             ))
-          ) : (
+        ) : (
             <div>No products available </div> // Handle empty state
           )}
         </CarouselContent>

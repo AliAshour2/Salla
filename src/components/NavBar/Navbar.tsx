@@ -19,6 +19,7 @@ import Modal from "./Modal";
 import { selectIsLoggedIn } from "@/features/auth/slices/authSlice";
 import useTextDirection from "@/hooks/useTextDirection"; 
 import AccountAvatar from "./AccountAvatar";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -64,16 +65,16 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between py-4">
           <div className="flex items-center">
-            <a href="#" className="text-2xl font-bold text-foreground">
+            <Link to={"/home"} className="text-2xl font-bold text-foreground">
               Salla
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            <a href="#" className="text-foreground hover:text-primary">
+            <Link to={'/home'} className="text-foreground hover:text-primary">
               {t("navbar.home")}
-            </a>
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="p-0">

@@ -1,12 +1,12 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './App.css'
-import Layout from './components/LayOut/Layout'
-import Home from './Pages/Home/Home'
-import SettingPage from './Pages/Setting/SettingPage'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import Layout from "./components/LayOut/Layout";
+import Home from "./Pages/Home/Home";
+import SettingPage from "./Pages/Setting/SettingPage";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import ProductViewer from "./Pages/ProductViewer/ProductViewerPage";
 
 function App() {
   const routes = createBrowserRouter([
@@ -15,26 +15,30 @@ function App() {
       element: <Layout />,
       children: [
         {
-          index: true, 
+          index: true,
           element: <Home />,
         },
         {
-          path: "home", 
+          path: "home",
           element: <Home />,
         },
         {
-          path :"settings",
-          element: <SettingPage />
-        }
+          path: "settings",
+          element: <SettingPage />,
+        },
+        {
+          path: "details/:id",
+          element: <ProductViewer />,
+        },
       ],
     },
   ]);
 
   return (
     <>
-       <RouterProvider router={routes} />
+      <RouterProvider router={routes} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

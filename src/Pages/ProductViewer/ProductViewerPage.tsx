@@ -1,109 +1,9 @@
-// import StarRating from '@/components/shared/StarRaring';
-// import { useGetSpecificProductQuery } from '@/services/api/ProductsApi/ProductsApi';
-// import React from 'react';
-// import { useParams } from 'react-router-dom';
-
-// const ProductViewPage = () => {
-//   // Get the product ID from the URL
-//   const { id } = useParams();
-
-//   // Fetch the specific product using the product ID
-//   const { data: product, error, isLoading } = useGetSpecificProductQuery(id!);
-
-//   if (isLoading) {
-//     return <div>Loading...</div>; // Display a loading message while fetching the data
-//   }
-
-//   if (error) {
-//     return <div>Failed to load product details. Please try again later.</div>;
-//   }
-
-//   if (!product) {
-//     return <div>Product not found.</div>;
-//   }
-
-//   // Render the product details
-//   return (
-//     <div className="container mx-auto p-4">
-//       <div className="flex flex-col md:flex-row">
-//         {/* Product Image */}
-//         <div className="w-full md:w-1/2">
-//           <img
-//             src={product.imageCover}
-//             alt={product.title}
-//             className="w-full h-auto rounded-lg"
-//             loading="lazy"
-//           />
-//         </div>
-
-//         {/* Product Details */}
-//         <div className="w-full md:w-1/2 p-4">
-//           <h1 className="text-3xl font-bold mb-2">{product.title}</h1>
-//           <p className="text-gray-600 mb-4">{product.description}</p>
-
-//           <div className="text-yellow-500 mb-4">
-//             <StarRating rating={product.ratingsAverage} />
-//             <span className="text-gray-500 text-sm px-2">
-//               {product.ratingsAverage} / 5 ({product.ratingsQuantity} ratings)
-//             </span>
-//           </div>
-
-//           <div className="text-2xl font-bold text-green-500 mb-4">
-//             {product.price} EGY
-//           </div>
-
-//           {/* Category and Brand */}
-//           <div className="mb-4">
-//             <p>
-//               <strong>Category:</strong> {product.category?.name}
-//             </p>
-//             <p>
-//               <strong>Brand:</strong> {product.brand?.name}
-//             </p>
-//           </div>
-
-//           {/* Available Quantity */}
-//           <div className="mb-4">
-//             <p>
-//               <strong>Available:</strong> {product.quantity} in stock
-//             </p>
-//           </div>
-
-//           {/* Add to Cart Button */}
-//           <button className="p-3 bg-green-500 text-white rounded hover:bg-green-600">
-//             Add to Cart
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Additional Images */}
-//       {product.images?.length > 0 && (
-//         <div className="mt-8">
-//           <h2 className="text-2xl font-bold mb-4">More Images</h2>
-//           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-//             {product.images.map((image, index) => (
-//               <img
-//                 key={index}
-//                 src={image}
-//                 alt={`${product.title} - image ${index + 1}`}
-//                 className="w-full h-auto rounded-lg"
-//                 loading="lazy"
-//               />
-//             ))}
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default ProductViewPage;
-
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useGetSpecificProductQuery } from "@/services/api/ProductsApi/ProductsApi";
 import StarRating from "@/components/shared/StarRaring";
+import ProductViewPageSkeleton from "@/components/skeletons/ProductViewPageSkeleton";
 
 export default function ProductViewer() {
   const { id } = useParams(); // Get the product ID from the URL
@@ -144,7 +44,7 @@ export default function ProductViewer() {
 
   // Return early if loading or error state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <ProductViewPageSkeleton/>;
   }
 
   if (error) {

@@ -21,6 +21,7 @@ export const productsApi = createApi({
           brand,
           categoryIn
         } = params || {};
+        
 
         // Build the query string with optional params
         const queryParams = new URLSearchParams();

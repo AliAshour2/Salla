@@ -18,7 +18,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
   return (
     <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm">
       <div className="text-center">
-        <Link to={`details/${product._id}`}>
+        <Link to={`/details/${product._id}`}>
           <img
             src={product.imageCover}
             alt={product.title}
@@ -34,7 +34,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
             <Tooltip>
               <TooltipTrigger>
                 <Link
-                  to={`details/${product._id}`}
+                  to={`/details/${product._id}`}
                   className="px-2 py-1 rounded-lg bg-white text-gray-500 hover:text-white hover:bg-green-500"
                   aria-label="Show Product"
                 >

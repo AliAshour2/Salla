@@ -16,13 +16,13 @@ interface ProductCartProps {
 
 const ProductCart = ({ product }: ProductCartProps) => {
   return (
-    <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm">
+    <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm  duration-300 ease-in-out transition-all">
       <div className="text-center">
         <Link to={`/details/${product._id}`}>
           <img
             src={product.imageCover}
             alt={product.title}
-            className="w-full h-auto rounded"
+            className="rounded h-full w-full object-cover duration-300 ease-in-out hover:scale-105 hover:mb-2 transition-all"
             loading="lazy"
             onError={(e) => {
               e.currentTarget.src = "/path/to/placeholder/image.jpg"; // Placeholder image
@@ -68,7 +68,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
       {/* Product Title with Tooltip */}
       <Link
         to={`details/${product._id}`}
-        className="text-black text-decoration-none block"
+        className="text-sm text-gray-600 hover:text-green-500 block"
       >
         {product.category?.name}
       </Link>
@@ -76,9 +76,9 @@ const ProductCart = ({ product }: ProductCartProps) => {
         <Tooltip>
           <TooltipTrigger>
             <h5 className="text-md font-bold text-gray-800 text-start">
-              <span className="mr-2">{product.brand.name}</span>
+              <span className="mr-2 text-gray-700 block">{product.brand.name}</span>
               <span className=" my-1 mt-2">
-                <Link to={`details/${product._id}`} className="">
+                <Link to={`/details/${product._id}`} className="text-gray-900 hover:text-green-500 ">
                   {product.title.split(" ").slice(0, 2).join(" ")}
                 </Link>
               </span>
@@ -91,7 +91,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
       </TooltipProvider>
 
       {/* Ratings Section */}
-      <div className="text-yellow-500">
+      <div className="flex items-center text-yellow-500">
         <small>
           <StarRating rating={product.ratingsAverage} />
         </small>
@@ -102,9 +102,9 @@ const ProductCart = ({ product }: ProductCartProps) => {
 
       {/* Price and Add to Cart Button */}
       <div className="flex items-center justify-between mt-3">
-        <div className="text-black">{product.price} EGY</div>
+        <div className="text-lg font-semibold text-gray-900">{product.price.toLocaleString()} EGY</div>
         <button
-          className="p-2 text-white bg-green-500 hover:bg-green-600 rounded"
+          className="rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
           aria-label="Add to cart"
         >
           Add+

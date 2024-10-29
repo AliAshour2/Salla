@@ -8,10 +8,8 @@ export const WishListApi = createApi({
     baseUrl: Base_URL,
     prepareHeaders: (headers: Headers) => {
       const token = localStorage.getItem("userToken");
-      console.log(token);
       if (token) {
         headers.set("token", token);
-        console.log(token);
       }
       return headers;
     },

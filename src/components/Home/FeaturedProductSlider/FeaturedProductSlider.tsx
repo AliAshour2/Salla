@@ -12,7 +12,7 @@ const FeaturedProductSlider = () => {
     refetchOnFocus: false,        // Prevent refetch when window regains focus
     refetchOnReconnect: false,    // Prevent refetch when network reconnects    
     refetchOnMountOrArgChange: false,  // Prevent refetch when the component mounts or args change
-    keepUnusedDataFor: 30,
+   
   }
 );
   const products = data?.data || [];

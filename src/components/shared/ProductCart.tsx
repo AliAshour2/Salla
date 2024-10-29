@@ -8,25 +8,18 @@ import {
 } from "../ui/tooltip";
 import { TproductCartProps } from "@/types";
 import StarRating from "./StarRaring";
-import { useAddProductToWishListMutation } from "@/services/api/WishlistApi/WishlistApi";
+
 
 // Destructure product inside props
 interface ProductCartProps {
   product: TproductCartProps;
+  handleAddToWishlist: () => void;
+  handleAddToCart?: () => void;
 }
 
-const ProductCart = ({ product }: ProductCartProps) => {
+const ProductCart = ({ product , handleAddToWishlist , handleAddToCart }: ProductCartProps) => {
 
-  const [addProductToWishList] = useAddProductToWishListMutation();
-  const handleAddToWishlist = async () => {
-    try {
-      await addProductToWishList(product).unwrap(); // Using unwrap to handle errors
-      // Optionally provide feedback to the user, e.g., show a success message
-    } catch (error) {
-      console.error("Failed to add product to wishlist: ", error);
-      // Optionally show an error message to the user
-    }
-  };
+  
 
   return (
     <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm  duration-300 ease-in-out transition-all">
@@ -120,6 +113,7 @@ const ProductCart = ({ product }: ProductCartProps) => {
         <button
           className="rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
           aria-label="Add to cart"
+          onClick={handleAddToCart}
         >
           Add+
         </button>

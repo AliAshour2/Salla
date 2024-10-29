@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import { TproductCartProps } from "@/types";
 import ProductCart from "./ProductCart";
+import { useAddProductToWishListMutation } from "@/services/api/WishlistApi/WishlistApi";
 
 interface SectionSliderProps {
   title: string;
@@ -16,6 +17,15 @@ interface SectionSliderProps {
 
 const SectionSlider = ({ title, products }: SectionSliderProps) => {
   const productList = products ?? [];
+  const [addProductToWishList] = useAddProductToWishListMutation();
+
+  const handleAddToWishlist = async (product: TproductCartProps) => {
+    try {
+      await addProductToWishList(product).unwrap();
+    } catch (error) {
+      console.error("Failed to add product to wishlist: ", error);
+    }
+  };
 
   return (
     <div >
@@ -29,7 +39,7 @@ const SectionSlider = ({ title, products }: SectionSliderProps) => {
                 className="pl-1 md:basis-1/2 lg:basis-1/5"
               >
                 <div className="p-1">
-                  <ProductCart product={product} />
+                  <ProductCart handleAddToWishlist={()=>handleAddToWishlist(product)} product={product} />
                 </div>
               </CarouselItem>
             ))

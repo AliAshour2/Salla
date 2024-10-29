@@ -9,18 +9,20 @@ import {
 import { TproductCartProps } from "@/types";
 import StarRating from "./StarRaring";
 
-
 // Destructure product inside props
 interface ProductCartProps {
   product: TproductCartProps;
   handleAddToWishlist: () => void;
   handleAddToCart?: () => void;
+  isInWishlist: boolean;
 }
 
-const ProductCart = ({ product , handleAddToWishlist , handleAddToCart }: ProductCartProps) => {
-
-  
-
+const ProductCart = ({
+  product,
+  handleAddToWishlist,
+  handleAddToCart,
+  isInWishlist
+}: ProductCartProps) => {
   return (
     <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm  duration-300 ease-in-out transition-all">
       <div className="text-center">
@@ -52,13 +54,12 @@ const ProductCart = ({ product , handleAddToWishlist , handleAddToCart }: Produc
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <button
                   onClick={handleAddToWishlist}
-                  className="bg-white px-2 py-1 rounded-lg text-gray-500 hover:text-white hover:bg-green-500"
+                  className={` ${isInWishlist ? "text-red-500" : "text-gray-500"} bg-white  px-2 py-1 rounded-lg  hover:text-white hover:bg-green-500`}
                   aria-label="Add to wishlist"
                 >
                   <i className="fa-solid fa-heart"></i>
@@ -83,9 +84,14 @@ const ProductCart = ({ product , handleAddToWishlist , handleAddToCart }: Produc
         <Tooltip>
           <TooltipTrigger>
             <h5 className="text-md font-bold text-gray-800 text-start">
-              <span className="mr-2 text-gray-700 block">{product.brand.name}</span>
+              <span className="mr-2 text-gray-700 block">
+                {product.brand.name}
+              </span>
               <span className=" my-1 mt-2">
-                <Link to={`/details/${product._id}`} className="text-gray-900 hover:text-green-500 ">
+                <Link
+                  to={`/details/${product._id}`}
+                  className="text-gray-900 hover:text-green-500 "
+                >
                   {product.title.split(" ").slice(0, 2).join(" ")}
                 </Link>
               </span>
@@ -109,7 +115,9 @@ const ProductCart = ({ product , handleAddToWishlist , handleAddToCart }: Produc
 
       {/* Price and Add to Cart Button */}
       <div className="flex items-center justify-between mt-3">
-        <div className="text-lg font-semibold text-gray-900">{product.price.toLocaleString()} EGY</div>
+        <div className="text-lg font-semibold text-gray-900">
+          {product.price.toLocaleString()} EGY
+        </div>
         <button
           className="rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600"
           aria-label="Add to cart"

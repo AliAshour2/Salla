@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/carousel";
 import { TproductCartProps } from "@/types";
 import ProductCart from "./ProductCart";
-import { useAddProductToWishListMutation } from "@/services/api/WishlistApi/WishlistApi";
+import { useAddProductToWishListMutation, useRemoveProductFromWishListMutation } from "@/services/api/WishlistApi/WishlistApi";
+import { useState } from "react";
 
 interface SectionSliderProps {
   title: string;
@@ -18,14 +19,23 @@ interface SectionSliderProps {
 const SectionSlider = ({ title, products }: SectionSliderProps) => {
   const productList = products ?? [];
   const [addProductToWishList] = useAddProductToWishListMutation();
+  const [removeProductFromWishList] = useRemoveProductFromWishListMutation();
+  const [wishlistItems, setWishlistItems] = useState<string[]>([]);
 
-  const handleAddToWishlist = async (product: TproductCartProps) => {
+  const handleWishlistToggle = async (product: TproductCartProps) => {
     try {
-      await addProductToWishList(product).unwrap();
+      if (wishlistItems.includes(product._id)) {
+        await removeProductFromWishList(product).unwrap();
+        setWishlistItems((prev) => prev.filter((id) => id !== product._id));
+      } else {
+        await addProductToWishList(product).unwrap();
+        setWishlistItems((prev) => [...prev, product._id]);
+      }
     } catch (error) {
-      console.error("Failed to add product to wishlist: ", error);
+      console.error("Failed to update wishlist: ", error);
     }
   };
+
 
   return (
     <div >
@@ -39,7 +49,7 @@ const SectionSlider = ({ title, products }: SectionSliderProps) => {
                 className="pl-1 md:basis-1/2 lg:basis-1/5"
               >
                 <div className="p-1">
-                  <ProductCart handleAddToWishlist={()=>handleAddToWishlist(product)} product={product} />
+                  <ProductCart handleAddToWishlist={()=>handleWishlistToggle(product)} isInWishlist={wishlistItems.includes(product._id)} product={product} />
                 </div>
               </CarouselItem>
             ))

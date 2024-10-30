@@ -8,6 +8,7 @@ import {
 } from "../ui/tooltip";
 import { TproductCartProps } from "@/types";
 import StarRating from "./StarRaring";
+import { memo } from "react";
 
 // Destructure product inside props
 interface ProductCartProps {
@@ -17,7 +18,7 @@ interface ProductCartProps {
   isInWishlist: boolean;
 }
 
-const ProductCart = ({
+const ProductCart = memo(({
   product,
   handleAddToWishlist,
   handleAddToCart,
@@ -66,7 +67,7 @@ const ProductCart = ({
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Add to wishlist</p>
+                <p>{isInWishlist ? "Remove from wishlist" : "Add to wishlist"}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -128,6 +129,6 @@ const ProductCart = ({
       </div>
     </div>
   );
-};
+});
 
 export default ProductCart;

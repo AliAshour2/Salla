@@ -20,12 +20,14 @@ import { selectIsLoggedIn } from "@/features/auth/slices/authSlice";
 import useTextDirection from "@/hooks/useTextDirection"; 
 import AccountAvatar from "./AccountAvatar";
 import { Link } from "react-router-dom";
+import { useGetWishListQuery } from "@/services/api/WishlistApi/WishlistApi";
 
 export default function Navbar() {
   const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { data: wishlistData, isLoading: isLoadingWishlist, isError: isWishlistError } = useGetWishListQuery();
 
   const { direction, alignmentClass } = useTextDirection(); // Use the hook
 
@@ -98,7 +100,7 @@ export default function Navbar() {
             <Button variant="ghost" size="icon" onClick={handleClickOnWishList} className="relative">
               <Heart className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-                5
+               {wishlistData?.data?.length || 0}
               </span>
             </Button>
             <Button variant="ghost" size="icon" onClick={handleClickOnCart} className="relative">

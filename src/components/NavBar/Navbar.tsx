@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Heart, ShoppingCart, ChevronDown, Menu, } from "lucide-react";
+import { Heart, ShoppingCart, ChevronDown, Menu } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -17,17 +17,18 @@ import AuthComponent from "../AuthComponent/AuthComponent";
 import Modal from "./Modal";
 
 import { selectIsLoggedIn } from "@/features/auth/slices/authSlice";
-import useTextDirection from "@/hooks/useTextDirection"; 
+import useTextDirection from "@/hooks/useTextDirection";
 import AccountAvatar from "./AccountAvatar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetWishListQuery } from "@/services/api/WishlistApi/WishlistApi";
 
 export default function Navbar() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const { data: wishlistData, isLoading: isLoadingWishlist, isError: isWishlistError } = useGetWishListQuery();
+  const { data: wishlistData, isLoading, isError } = useGetWishListQuery({});
 
   const { direction, alignmentClass } = useTextDirection(); // Use the hook
 
@@ -45,6 +46,8 @@ export default function Navbar() {
     if (!isLoggedIn) {
       toast.error("Please login first");
       openSignInModal();
+    } else {
+      navigate("/wishlist");
     }
   };
 
@@ -63,7 +66,10 @@ export default function Navbar() {
   ];
 
   return (
-    <header className={`w-full bg-background border-b ${alignmentClass}`} style={{ direction }}>
+    <header
+      className={`w-full bg-background border-b ${alignmentClass}`}
+      style={{ direction }}
+    >
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between py-4">
           <div className="flex items-center">
@@ -74,13 +80,14 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to={'/home'} className="text-foreground hover:text-primary">
+            <Link to={"/home"} className="text-foreground hover:text-primary">
               {t("navbar.home")}
             </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="p-0">
-                  {t("navbar.categoriesDrop")} <ChevronDown className="ml-1 h-4 w-4" />
+                  {t("navbar.categoriesDrop")}{" "}
+                  <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -97,13 +104,23 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-1">
-            <Button variant="ghost" size="icon" onClick={handleClickOnWishList} className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleClickOnWishList}
+              className="relative"
+            >
               <Heart className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-               {wishlistData?.data?.length || 0}
+                {wishlistData?.data?.length || 0}
               </span>
             </Button>
-            <Button variant="ghost" size="icon" onClick={handleClickOnCart} className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleClickOnCart}
+              className="relative"
+            >
               <ShoppingCart className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
                 5
@@ -116,9 +133,7 @@ export default function Navbar() {
                 <Button variant="ghost" onClick={openSignInModal}>
                   {t("navbar.login")}
                 </Button>
-                <Button onClick={openSignUpModal}>
-                  {t("navbar.signup")}
-                </Button>
+                <Button onClick={openSignUpModal}>{t("navbar.signup")}</Button>
               </div>
             )}
 
@@ -137,7 +152,8 @@ export default function Navbar() {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="justify-start p-0">
-                        {t("navbar.categoriesDrop")} <ChevronDown className="ml-1 h-4 w-4" />
+                        {t("navbar.categoriesDrop")}{" "}
+                        <ChevronDown className="ml-1 h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>

@@ -7,6 +7,8 @@ import SettingPage from "./Pages/Setting/SettingPage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductViewer from "./Pages/ProductViewer/ProductViewerPage";
+import WishlistPage from "./Pages/Wishlist/wishlistPage";
+
 
 function App() {
   const routes = createBrowserRouter([
@@ -30,6 +32,10 @@ function App() {
           path: "details/:id",
           element: <ProductViewer />,
         },
+        {
+          path :"wishlist",
+          element: <WishlistPage/>
+        }
       ],
     },
   ]);

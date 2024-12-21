@@ -17,23 +17,25 @@ const WishlistPage = () => {
   const [removeFromWishlist] = useRemoveProductFromWishListMutation();
   const [loadingProducts, setLoadingProducts] = useState<string[]>([]); // Track loading products by ID
 
-  const handleAddToWishlist = async (product: TproductCartProps) => {
-    try {
-      // Add product ID to loading state
-      toast.loading(`Removing ${product.title} from wishlist...`, {
-        id: product._id,
-      });
-      await removeFromWishlist(product).unwrap();
-      toast.success(`${product.title} removed from wishlist`, {
-        id: product._id,
-      });
-    } catch (error) {
-      console.error("Error removing from wishlist:", error);
-      toast.error("Error removing from wishlist");
-    } finally {
-      // Remove product ID from loading state
-      setLoadingProducts((prev) => prev.filter((id) => id !== product._id));
-    }
+  const handleAddToWishlist = async (product: TproductCartProps) => { 
+    try { 
+      // Add product ID to loading state FIRST
+      setLoadingProducts(prev => [...prev, product._id]);
+      
+      toast.loading(`Removing ${product.title} from wishlist...`, { 
+        id: product._id, 
+      }); 
+      await removeFromWishlist(product).unwrap(); 
+      toast.success(`${product.title} removed from wishlist`, { 
+        id: product._id, 
+      }); 
+    } catch (error) { 
+      console.error("Error removing from wishlist:", error); 
+      toast.error("Error removing from wishlist"); 
+    } finally { 
+      // Remove product ID from loading state 
+      setLoadingProducts((prev) => prev.filter((id) => id !== product._id)); 
+    } 
   };
 
   const handleAddToCart = (product: TproductCartProps) => {

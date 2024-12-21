@@ -1,12 +1,6 @@
-import { useState } from "react";
-
 import { TproductCartProps } from "@/types";
-import {
-  useGetWishListQuery,
-  useRemoveProductFromWishListMutation,
-} from "@/services/api/WishlistApi/WishlistApi";
+import { useGetWishListQuery } from "@/services/api/WishlistApi/WishlistApi";
 import ProductCart from "@/components/shared/ProductCart";
-import { toast } from "sonner";
 
 const WishlistPage = () => {
   const {
@@ -14,33 +8,6 @@ const WishlistPage = () => {
     isLoading: isPageLoading,
     error,
   } = useGetWishListQuery({});
-  const [removeFromWishlist] = useRemoveProductFromWishListMutation();
-  const [loadingProducts, setLoadingProducts] = useState<string[]>([]); // Track loading products by ID
-
-  const handleAddToWishlist = async (product: TproductCartProps) => { 
-    try { 
-      // Add product ID to loading state FIRST
-      setLoadingProducts(prev => [...prev, product._id]);
-      
-      toast.loading(`Removing ${product.title} from wishlist...`, { 
-        id: product._id, 
-      }); 
-      await removeFromWishlist(product).unwrap(); 
-      toast.success(`${product.title} removed from wishlist`, { 
-        id: product._id, 
-      }); 
-    } catch (error) { 
-      console.error("Error removing from wishlist:", error); 
-      toast.error("Error removing from wishlist"); 
-    } finally { 
-      // Remove product ID from loading state 
-      setLoadingProducts((prev) => prev.filter((id) => id !== product._id)); 
-    } 
-  };
-
-  const handleAddToCart = (product: TproductCartProps) => {
-    console.log("Adding to cart:", product);
-  };
 
   if (isPageLoading) {
     return (
@@ -85,19 +52,10 @@ const WishlistPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {wishlistData.data.map((product: TproductCartProps) => (
-          <div key={product._id} className="relative">
-            {/* Loading Overlay */}
-            {loadingProducts.includes(product._id) && (
-              <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center rounded">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500"></div>
-              </div>
-            )}
-
+          <div key={product._id}>
             <ProductCart
               product={product}
-              handleAddToWishlist={() => handleAddToWishlist(product)}
-              handleAddToCart={() => handleAddToCart(product)}
-              isInWishlist={true}
+              initialIsInWishlist={true}
             />
           </div>
         ))}

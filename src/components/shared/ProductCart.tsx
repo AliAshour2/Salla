@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import {
   Tooltip,
   TooltipContent,
@@ -8,24 +7,64 @@ import {
 } from "../ui/tooltip";
 import { TproductCartProps } from "@/types";
 import StarRating from "./StarRaring";
-import { memo } from "react";
+import { memo, useCallback, useState } from "react";
+import { toast } from "sonner";
+import {
+  useAddProductToWishListMutation,
+  useRemoveProductFromWishListMutation,
+} from "@/services/api/WishlistApi/WishlistApi";
 
-// Destructure product inside props
 interface ProductCartProps {
   product: TproductCartProps;
-  handleAddToWishlist: () => void;
+  initialIsInWishlist?: boolean;
   handleAddToCart?: () => void;
-  isInWishlist: boolean;
 }
 
 const ProductCart = memo(({
   product,
-  handleAddToWishlist,
+  initialIsInWishlist = false,
   handleAddToCart,
-  isInWishlist
 }: ProductCartProps) => {
+  const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [addToWishList] = useAddProductToWishListMutation();
+  const [removeFromWishList] = useRemoveProductFromWishListMutation();
+
+  const handleWishlistToggle = useCallback(async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    const toastId = `wishlist-${product._id}`;
+
+    try {
+      if (isInWishlist) {
+        toast.loading(`Removing ${product.title} from wishlist...`, { id: toastId });
+        await removeFromWishList(product).unwrap();
+        toast.success(`${product.title} removed from wishlist`, { id: toastId });
+      } else {
+        toast.loading(`Adding ${product.title} to wishlist...`, { id: toastId });
+        await addToWishList(product).unwrap();
+        toast.success(`${product.title} added to wishlist`, { id: toastId });
+      }
+      
+      setIsInWishlist(!isInWishlist);
+    } catch (error) {
+      console.error("Wishlist operation failed:", error);
+      toast.error("Failed to update wishlist", { id: toastId });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [product, isInWishlist, isLoading, addToWishList, removeFromWishList]);
+
   return (
-    <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm  duration-300 ease-in-out transition-all">
+    <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm duration-300 ease-in-out transition-all">
+      {isLoading && (
+        <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center rounded">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500"></div>
+        </div>
+      )}
+
       <div className="text-center">
         <Link to={`/details/${product._id}`}>
           <img
@@ -34,7 +73,7 @@ const ProductCart = memo(({
             className="rounded h-full w-full object-cover duration-300 ease-in-out hover:scale-105 hover:mb-2 transition-all"
             loading="lazy"
             onError={(e) => {
-              e.currentTarget.src = "/path/to/placeholder/image.jpg"; // Placeholder image
+              e.currentTarget.src = "/path/to/placeholder/image.jpg";
             }}
           />
         </Link>
@@ -55,13 +94,17 @@ const ProductCart = memo(({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <button
-                  onClick={handleAddToWishlist}
-                  className={` ${isInWishlist ? "text-red-500" : "text-gray-500"} bg-white  px-2 py-1 rounded-lg  hover:text-white hover:bg-green-500`}
-                  aria-label="Add to wishlist"
+                  onClick={handleWishlistToggle}
+                  disabled={isLoading}
+                  className={`${
+                    isInWishlist ? "text-red-500" : "text-gray-500"
+                  } bg-white px-2 py-1 rounded-lg hover:text-white hover:bg-green-500`}
+                  aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
                 >
                   <i className="fa-solid fa-heart"></i>
                 </button>
@@ -74,13 +117,13 @@ const ProductCart = memo(({
         </div>
       </div>
 
-      {/* Product Title with Tooltip */}
       <Link
         to={`details/${product._id}`}
         className="text-sm text-gray-600 hover:text-green-500 block"
       >
         {product.category?.name}
       </Link>
+
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger>
@@ -88,10 +131,10 @@ const ProductCart = memo(({
               <span className="mr-2 text-gray-700 block">
                 {product.brand.name}
               </span>
-              <span className=" my-1 mt-2">
+              <span className="my-1 mt-2">
                 <Link
                   to={`/details/${product._id}`}
-                  className="text-gray-900 hover:text-green-500 "
+                  className="text-gray-900 hover:text-green-500"
                 >
                   {product.title.split(" ").slice(0, 2).join(" ")}
                 </Link>
@@ -104,7 +147,6 @@ const ProductCart = memo(({
         </Tooltip>
       </TooltipProvider>
 
-      {/* Ratings Section */}
       <div className="flex items-center text-yellow-500">
         <small>
           <StarRating rating={product.ratingsAverage} />
@@ -114,7 +156,6 @@ const ProductCart = memo(({
         </span>
       </div>
 
-      {/* Price and Add to Cart Button */}
       <div className="flex items-center justify-between mt-3">
         <div className="text-lg font-semibold text-gray-900">
           {product.price.toLocaleString()} EGY
@@ -130,5 +171,7 @@ const ProductCart = memo(({
     </div>
   );
 });
+
+ProductCart.displayName = "ProductCart";
 
 export default ProductCart;

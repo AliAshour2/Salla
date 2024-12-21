@@ -59,10 +59,10 @@ export default function Navbar() {
   };
 
   const categories = [
-    { id: 1, name: t("navbar.categories.1") , _id : "6439d58a0049ad0b52b9003f" },
-    { id: 2, name: t("navbar.categories.2") , _id :"6439d5b90049ad0b52b90048" },
-    { id: 3, name: t("navbar.categories.3") , _id :"6439d2d167d9aa4ca970649f" },
-    { id: 4, name: t("navbar.categories.4") ,_id :"6439d41c67d9aa4ca97064d5"},
+    { id: 1, name: t("navbar.categories.1"), _id: "6439d58a0049ad0b52b9003f" },
+    { id: 2, name: t("navbar.categories.2"), _id: "6439d5b90049ad0b52b90048" },
+    { id: 3, name: t("navbar.categories.3"), _id: "6439d2d167d9aa4ca970649f" },
+    { id: 4, name: t("navbar.categories.4"), _id: "6439d41c67d9aa4ca97064d5" },
   ];
 
   return (
@@ -93,7 +93,12 @@ export default function Navbar() {
               <DropdownMenuContent>
                 {categories.map((category) => (
                   <DropdownMenuItem key={category.id}>
-                    {category.name}
+                    <Link
+                      to={`/category/${category._id}`}
+                      className="w-full text-foreground hover:text-primary"
+                    >
+                      {category.name}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

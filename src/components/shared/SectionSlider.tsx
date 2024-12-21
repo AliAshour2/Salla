@@ -7,55 +7,17 @@ import {
 } from "@/components/ui/carousel";
 import { TproductCartProps } from "@/types";
 import ProductCart from "./ProductCart";
-import {
-  useAddProductToWishListMutation,
-  useRemoveProductFromWishListMutation,
-} from "@/services/api/WishlistApi/WishlistApi";
-import { useCallback, useMemo, useState } from "react";
-import { toast } from "sonner";
+import { useMemo } from "react";
 
 interface SectionSliderProps {
   title: string;
   products: TproductCartProps[] | undefined;
+  wishlistIds?: string[];
 }
 
-const SectionSlider = ({ title, products }: SectionSliderProps) => {
+const SectionSlider = ({ title, products, wishlistIds = [] }: SectionSliderProps) => {
   const productList = useMemo(() => products ?? [], [products]);
-  const [addProductToWishList] = useAddProductToWishListMutation();
-  const [removeProductFromWishList] = useRemoveProductFromWishListMutation();
-  const [wishlistItems, setWishlistItems] = useState<string[]>([]);
 
-   // 4. Optimize wishlist toggle handler with useCallback
-   const handleWishlistToggle = useCallback(async (product: TproductCartProps) => {
-    const isInWishlist = wishlistItems.includes(product._id);
-    const toastId = toast.loading(
-      `${isInWishlist ? 'Removing' : 'Adding'} ${product.title} ${isInWishlist ? 'from' : 'to'} wishlist`
-    );
-
-    try {
-      if (isInWishlist) {
-        await removeProductFromWishList(product).unwrap();
-        setWishlistItems(prev => prev.filter(id => id !== product._id));
-      } else {
-        await addProductToWishList(product).unwrap();
-        setWishlistItems(prev => [...prev, product._id]);
-      }
-      
-      toast.success(
-        `${product.title} ${isInWishlist ? 'removed from' : 'added to'} wishlist`,
-        { id: toastId }
-      );
-    } catch (error) {
-      console.error("Failed to update wishlist: ", error);
-      toast.error("Failed to update wishlist", { id: toastId });
-    }
-  }, [wishlistItems, addProductToWishList, removeProductFromWishList]);
-
-  // 5. Memoize the check for wishlist items
-  const isProductInWishlist = useCallback((productId: string) => 
-    wishlistItems.includes(productId),
-    [wishlistItems]
-  );
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-700 mb-4 max-sm:pl-3">
@@ -71,15 +33,14 @@ const SectionSlider = ({ title, products }: SectionSliderProps) => {
               >
                 <div className="p-1">
                   <ProductCart
-                    handleAddToWishlist={() => handleWishlistToggle(product)}
-                    isInWishlist={isProductInWishlist(product._id)}
                     product={product}
+                    initialIsInWishlist={wishlistIds.includes(product._id)}
                   />
                 </div>
               </CarouselItem>
             ))
           ) : (
-            <div>No products available </div> // Handle empty state
+            <div>No products available</div>
           )}
         </CarouselContent>
         <CarouselPrevious className="max-sm:left-6" />

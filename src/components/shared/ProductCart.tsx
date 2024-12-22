@@ -36,22 +36,27 @@ const ProductCart = memo(({
 
     setIsLoading(true);
     const toastId = `wishlist-${product._id}`;
+    const optimisticIsInWishlist = !isInWishlist;
+
+    // Optimistically update the UI
+    setIsInWishlist(optimisticIsInWishlist);
 
     try {
-      if (isInWishlist) {
-        toast.loading(`Removing ${product.title} from wishlist...`, { id: toastId });
-        await removeFromWishList(product).unwrap();
-        toast.success(`${product.title} removed from wishlist`, { id: toastId });
-      } else {
+      if (optimisticIsInWishlist) {
         toast.loading(`Adding ${product.title} to wishlist...`, { id: toastId });
         await addToWishList(product).unwrap();
         toast.success(`${product.title} added to wishlist`, { id: toastId });
+      } else {
+        toast.loading(`Removing ${product.title} from wishlist...`, { id: toastId });
+        await removeFromWishList(product).unwrap();
+        toast.success(`${product.title} removed from wishlist`, { id: toastId });
       }
-      
-      setIsInWishlist(!isInWishlist);
     } catch (error) {
       console.error("Wishlist operation failed:", error);
       toast.error("Failed to update wishlist", { id: toastId });
+
+      // Revert the optimistic update
+      setIsInWishlist(!optimisticIsInWishlist);
     } finally {
       setIsLoading(false);
     }
@@ -174,4 +179,4 @@ const ProductCart = memo(({
 
 ProductCart.displayName = "ProductCart";
 
-export default ProductCart;
+export default ProductCart; 

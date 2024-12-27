@@ -36,13 +36,13 @@ const ProductCart = memo(({
 
     setIsLoading(true);
     const toastId = `wishlist-${product._id}`;
-    const optimisticIsInWishlist = !isInWishlist;
+    const newWishlistState = !isInWishlist;
 
     // Optimistically update the UI
-    setIsInWishlist(optimisticIsInWishlist);
+    setIsInWishlist(newWishlistState);
 
     try {
-      if (optimisticIsInWishlist) {
+      if (newWishlistState) {
         toast.loading(`Adding ${product.title} to wishlist...`, { id: toastId });
         await addToWishList(product).unwrap();
         toast.success(`${product.title} added to wishlist`, { id: toastId });
@@ -56,7 +56,7 @@ const ProductCart = memo(({
       toast.error("Failed to update wishlist", { id: toastId });
 
       // Revert the optimistic update
-      setIsInWishlist(!optimisticIsInWishlist);
+      setIsInWishlist(!newWishlistState);
     } finally {
       setIsLoading(false);
     }
@@ -179,4 +179,4 @@ const ProductCart = memo(({
 
 ProductCart.displayName = "ProductCart";
 
-export default ProductCart; 
+export default ProductCart;

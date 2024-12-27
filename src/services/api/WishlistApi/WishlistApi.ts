@@ -26,6 +26,20 @@ export const WishListApi = createApi({
       }),
 
       invalidatesTags: ["WishList"],
+        
+      async onQueryStarted(product, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          WishListApi.util.updateQueryData('getWishList', undefined, draft => {
+            draft.push(product);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+
     }),
 
     removeProductFromWishList: builder.mutation({
@@ -35,6 +49,19 @@ export const WishListApi = createApi({
       }),
 
       invalidatesTags: ["WishList"],
+      async onQueryStarted(product, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          WishListApi.util.updateQueryData('getWishList', undefined, draft => {
+            return draft.filter((p: TproductCartProps) => p._id !== product._id);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      
     }),
 
     getWishList: builder.query({

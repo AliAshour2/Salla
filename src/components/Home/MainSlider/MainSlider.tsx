@@ -33,7 +33,14 @@ const MainSlider: React.FC = () => {
     description: string;
     link: string;
     ActionButtonText: string;
-  }> = t("mainSlider.items", { returnObjects: true });
+  }> = t("mainSlider.items", { returnObjects: true }) as Array<{
+    id: number;
+    badgeText: string;
+    title: string;
+    description: string;
+    link: string;
+    ActionButtonText: string;
+  }>;
   return (
     <>
       <div className="slider-container">

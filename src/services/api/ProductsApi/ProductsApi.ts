@@ -35,7 +35,7 @@ export const productsApi = createApi({
         if (keyword) queryParams.append('keyword', keyword);
         if (brand) queryParams.append('brand', brand);
         if (categoryIn) {
-          categoryIn.forEach((category: string) => queryParams.append('category[in]', category));
+          queryParams.append('category[in]', categoryIn);
         }
 
         return {

@@ -39,9 +39,9 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.status = "succeeded";
-        if (action.payload.message === "success") {
-          state.token = action.payload.token;
-          localStorage.setItem("userToken", action.payload.token);
+        if ((action.payload as { message: string }).message === "success") {
+          state.token = (action.payload as { token: string }).token;
+          localStorage.setItem("userToken", (action.payload as { token: string }).token);
         }
       })
       .addCase(registerUser.rejected, (state, action) => {

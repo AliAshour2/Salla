@@ -21,6 +21,7 @@ import useTextDirection from "@/hooks/useTextDirection";
 import AccountAvatar from "./AccountAvatar";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetWishListQuery } from "@/services/api/WishlistApi/WishlistApi";
+import { useGetCartQuery } from "@/services/api/cart/CartApi";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export default function Navbar() {
   const [isSignIn, setIsSignIn] = useState(true);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const { data: wishlistData } = useGetWishListQuery({});
+  const { data: cartData } = useGetCartQuery({});
 
   const { direction, alignmentClass } = useTextDirection(); // Use the hook
 
@@ -128,7 +130,7 @@ export default function Navbar() {
             >
               <ShoppingCart className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-                5
+              {cartData?.numOfCartItems}
               </span>
             </Button>
             {isLoggedIn ? (

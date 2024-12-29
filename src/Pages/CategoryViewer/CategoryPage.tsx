@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import ProductCart from '@/components/shared/ProductCart';
+import ProductCard from '@/components/shared/ProductCard';
 import { useGetAllProductsQuery } from '@/services/api/ProductsApi/ProductsApi';
 import { TproductCartProps } from '@/types';
 
@@ -156,7 +156,7 @@ const CategoryPage = () => {
       {/* Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {data?.data.map((product : TproductCartProps) => (
-          <ProductCart
+          <ProductCard
             key={product._id}
             product={product}
             initialIsInWishlist={false}

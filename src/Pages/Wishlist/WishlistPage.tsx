@@ -1,6 +1,6 @@
 import { TproductCartProps } from "@/types";
 import { useGetWishListQuery } from "@/services/api/WishlistApi/WishlistApi";
-import ProductCart from "@/components/shared/ProductCart";
+import ProductCard from "@/components/shared/ProductCard";
 
 const WishlistPage = () => {
   const {
@@ -53,7 +53,7 @@ const WishlistPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {wishlistData.data.map((product: TproductCartProps) => (
           <div key={product._id}>
-            <ProductCart
+            <ProductCard
               product={product}
               initialIsInWishlist={true}
             />

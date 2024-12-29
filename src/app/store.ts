@@ -3,6 +3,7 @@ import tokenReducer from "../features/token/tokenSlice";
 import authReducer from "../features/auth/slices/authSlice";
 import { productsApi } from "@/services/api/ProductsApi/ProductsApi";
 import { WishListApi } from "@/services/api/WishlistApi/WishlistApi";
+import { CartApi } from "@/services/api/cart/CartApi";
 
 const store = configureStore({
   reducer: {
@@ -10,11 +11,13 @@ const store = configureStore({
     auth: authReducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [WishListApi.reducerPath]: WishListApi.reducer,
+    [CartApi.reducerPath]: CartApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       productsApi.middleware,
-      WishListApi.middleware
+      WishListApi.middleware,
+      CartApi.middleware
     ),
 });
 

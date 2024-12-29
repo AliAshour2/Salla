@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { TproductCartProps } from "@/types";
-import ProductCart from "./ProductCart";
+import ProductCard from "./ProductCard";
 import { useMemo } from "react";
 
 interface SectionSliderProps {
@@ -32,7 +32,7 @@ const SectionSlider = ({ title, products, wishlistIds = [] }: SectionSliderProps
                 className="pl-1 md:basis-1/2 lg:basis-1/5"
               >
                 <div className="p-1">
-                  <ProductCart
+                  <ProductCard
                     product={product}
                     initialIsInWishlist={wishlistIds.includes(product._id)}
                   />

@@ -30,6 +30,7 @@ export type TproductCartProps = {
   name: string;
   ratingsAverage: number;
   ratingsQuantity: number;
+  count : number;
 };
 
 export interface GetSpecificProductResponse {

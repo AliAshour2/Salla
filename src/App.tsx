@@ -10,6 +10,7 @@ import ProductViewer from "./Pages/ProductViewer/ProductViewerPage";
 // import CategoryPage from "./Pages/CategoryViewer/CategoryPage";
 import WishlistPage from "./Pages/Wishlist/WishlistPage";
 import CategoryPage from "./Pages/CategoryViewer/CategoryPage";
+import { CartPage } from "./Pages/Cart/cart";
 
 function App() {
   const routes = createBrowserRouter([
@@ -41,6 +42,10 @@ function App() {
           path: "/category/:categoryId",
           element: <CategoryPage />,
         },
+        {
+          path:'cart',
+          element:<CartPage/>
+        }
       ],
     },
   ]);

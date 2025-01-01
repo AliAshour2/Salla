@@ -57,6 +57,8 @@ export default function Navbar() {
     if (!isLoggedIn) {
       toast.error("Please login first");
       openSignInModal();
+    }else{
+      navigate("/cart");
     }
   };
 

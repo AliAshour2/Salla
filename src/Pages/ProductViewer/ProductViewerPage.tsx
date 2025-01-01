@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useGetSpecificProductQuery } from "@/services/api/ProductsApi/ProductsApi";
 import StarRating from "@/components/shared/StarRaring";
 import ProductViewPageSkeleton from "@/components/skeletons/ProductViewPageSkeleton";
+import { useWishlist } from "@/hooks/useWishlist";
+import { useCart } from "@/hooks/useCart";
 
 export default function ProductViewer() {
   const { id } = useParams(); // Get the product ID from the URL
@@ -12,6 +14,10 @@ export default function ProductViewer() {
   const [quantity, setQuantity] = useState(0);
   const [showGallery, setShowGallery] = useState(false);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
+
+  // Initialize hooks
+  const { isInWishlist, isLoading: isWishlistLoading, handleWishlistToggle } = useWishlist(product!, false);
+  const { handleAddToCart } = useCart(product!);
 
   // Functions for handling image navigation
   const nextImage = () =>
@@ -44,7 +50,7 @@ export default function ProductViewer() {
 
   // Return early if loading or error state
   if (isLoading) {
-    return <ProductViewPageSkeleton/>;
+    return <ProductViewPageSkeleton />;
   }
 
   if (error) {
@@ -95,7 +101,6 @@ export default function ProductViewer() {
           </h2>
           <h1 className="text-3xl font-bold mt-2">{product.title}</h1>
           <p className="mt-4 text-gray-600">{product.description}</p>
-          
 
           <div className="mt-4 flex items-center">
             <span className="text-3xl font-bold text-green-500">
@@ -107,7 +112,6 @@ export default function ProductViewer() {
             </span>
 
             <span className="ml-auto text-gray-400 line-through">
-              {" "}
               {(product.price ? product.price * 2 : 0).toFixed(2)} EGY
             </span>
           </div>
@@ -123,7 +127,11 @@ export default function ProductViewer() {
           {/* Quantity Selector */}
           <div className="mt-6 flex items-center">
             <button
-              className={`${quantity === 0 ? 'opacity-50 disabled cursor-not-allowed ' : 'hover:bg-gray-300'} bg-gray-100  text-primary px-4 py-2 rounded-md`}
+              className={`${
+                quantity === 0
+                  ? "opacity-50 disabled cursor-not-allowed"
+                  : "hover:bg-gray-300"
+              } bg-gray-100  text-primary px-4 py-2 rounded-md`}
               onClick={() => setQuantity(Math.max(0, quantity - 1))}
             >
               -
@@ -138,7 +146,10 @@ export default function ProductViewer() {
           </div>
 
           {/* Add to Cart Button */}
-          <button className="mt-6 w-full py-3 bg-green-500 hover:bg-green-600 text-white rounded-md flex items-center justify-center">
+          <button
+            className="mt-6 w-full py-3 bg-green-500 hover:bg-green-600 text-white rounded-md flex items-center justify-center"
+            onClick={handleAddToCart}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 mr-2"
@@ -148,6 +159,25 @@ export default function ProductViewer() {
               <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
             </svg>
             Add to cart
+          </button>
+
+          {/* Add to Wishlist Button */}
+          <button
+            className={`mt-4 w-full py-3 ${
+              isInWishlist ? "bg-red-500 hover:bg-red-600" : "bg-gray-500 hover:bg-gray-600"
+            } text-white rounded-md flex items-center justify-center`}
+            onClick={handleWishlistToggle}
+            disabled={isWishlistLoading}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656l-6.364 6.364a.5.5 0 01-.707 0l-6.364-6.364a4 4 0 010-5.656z" />
+            </svg>
+            {isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
           </button>
         </div>
       </div>
@@ -159,7 +189,6 @@ export default function ProductViewer() {
             <button
               className="absolute top-4 right-4 text-black hover:text-red-800"
               onClick={() => setShowGallery(false)}
-              
             >
               <X className="w-6 h-6" />
             </button>

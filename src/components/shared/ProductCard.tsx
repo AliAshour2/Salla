@@ -7,13 +7,9 @@ import {
 } from "../ui/tooltip";
 import { TproductCartProps } from "@/types";
 import StarRating from "./StarRaring";
-import { memo, useCallback, useState } from "react";
-import { toast } from "sonner";
-import {
-  useAddProductToWishListMutation,
-  useRemoveProductFromWishListMutation,
-} from "@/services/api/WishlistApi/WishlistApi";
-import { useAddProductToCartMutation } from "@/services/api/cart/CartApi";
+import { memo } from "react";
+import { useWishlist } from "@/hooks/useWishlist";
+import { useCart } from "@/hooks/useCart";
 
 interface ProductCartProps {
   product: TproductCartProps;
@@ -22,61 +18,8 @@ interface ProductCartProps {
 
 const ProductCard = memo(
   ({ product, initialIsInWishlist = false }: ProductCartProps) => {
-    const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [addToWishList] = useAddProductToWishListMutation();
-    const [removeFromWishList] = useRemoveProductFromWishListMutation();
-    const [addToCart] = useAddProductToCartMutation();
-
-    const handleWishlistToggle = useCallback(async () => {
-      if (isLoading) return;
-
-      setIsLoading(true);
-      const toastId = `wishlist-${product._id}`;
-      const newWishlistState = !isInWishlist;
-
-      // Optimistically update the UI
-      setIsInWishlist(newWishlistState);
-
-      try {
-        if (newWishlistState) {
-          toast.loading(`Adding ${product.title} to wishlist...`, {
-            id: toastId,
-          });
-          await addToWishList(product).unwrap();
-          toast.success(`${product.title} added to wishlist`, { id: toastId });
-        } else {
-          toast.loading(`Removing ${product.title} from wishlist...`, {
-            id: toastId,
-          });
-          await removeFromWishList(product).unwrap();
-          toast.success(`${product.title} removed from wishlist`, {
-            id: toastId,
-          });
-        }
-      } catch (error) {
-        console.error("Wishlist operation failed:", error);
-        toast.error("Failed to update wishlist", { id: toastId });
-
-        // Revert the optimistic update
-        setIsInWishlist(!newWishlistState);
-      } finally {
-        setIsLoading(false);
-      }
-    }, [product, isInWishlist, isLoading, addToWishList, removeFromWishList]);
-
-    const handleAddToCart = useCallback(async () => {
-      const toastId = `cart-${product._id}`;
-      try {
-        toast.loading("Adding Product To Cart", { id: toastId });
-        await addToCart(product).unwrap();
-        toast.success(`${product.title} added to cart`, { id: toastId });
-      } catch (error) {
-        console.error("Add to cart operation failed:", error);
-        toast.error("Failed to add product to cart", { id: toastId });
-      }
-    }, [product, addToCart]);
+    const { isInWishlist, isLoading, handleWishlistToggle } = useWishlist(product, initialIsInWishlist);
+    const { handleAddToCart } = useCart(product);
 
     return (
       <div className="relative rounded border p-3 group hover:border-green-500 hover:shadow-sm duration-300 ease-in-out transition-all">
@@ -125,17 +68,13 @@ const ProductCard = memo(
                     className={`${
                       isInWishlist ? "text-red-500" : "text-gray-500"
                     } bg-white px-2 py-1 rounded-lg hover:text-white hover:bg-green-500`}
-                    aria-label={
-                      isInWishlist ? "Remove from wishlist" : "Add to wishlist"
-                    }
+                    aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
                   >
                     <i className="fa-solid fa-heart"></i>
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>
-                    {isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
-                  </p>
+                  <p>{isInWishlist ? "Remove from wishlist" : "Add to wishlist"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -198,6 +137,6 @@ const ProductCard = memo(
   }
 );
 
-ProductCard.displayName = "ProductCart";
+ProductCard.displayName = "ProductCard";
 
 export default ProductCard;

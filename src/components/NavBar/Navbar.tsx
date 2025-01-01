@@ -107,9 +107,6 @@ export default function Navbar() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <a href="#" className="text-foreground hover:text-primary">
-              Account
-            </a>
           </div>
 
           <div className="flex items-center space-x-1">

@@ -62,7 +62,7 @@ export default function ProductViewer() {
       <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[60vh]">
         <div className="text-red-500 text-center">
           <i className="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
-          <p>Failed to load product. Please try again later.</p>;
+          <p>Failed to load product. Please try again later.</p>
         </div>
       </div>
     );

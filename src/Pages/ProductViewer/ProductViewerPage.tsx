@@ -16,7 +16,11 @@ export default function ProductViewer() {
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
   // Initialize hooks
-  const { isInWishlist, isLoading: isWishlistLoading, handleWishlistToggle } = useWishlist(product!, false);
+  const {
+    isInWishlist,
+    isLoading: isWishlistLoading,
+    handleWishlistToggle,
+  } = useWishlist(product!, false);
   const { handleAddToCart } = useCart(product!);
 
   // Functions for handling image navigation
@@ -54,11 +58,25 @@ export default function ProductViewer() {
   }
 
   if (error) {
-    return <div>Failed to load product. Please try again later.</div>;
+    return (
+      <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[60vh]">
+        <div className="text-red-500 text-center">
+          <i className="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
+          <p>Failed to load product. Please try again later.</p>;
+        </div>
+      </div>
+    );
   }
 
   if (!product) {
-    return <div>Product not found.</div>;
+    return(
+      <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[60vh]">
+        <div className="text-red-500 text-center">
+          <i className="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
+          <p>Product not found.</p>
+        </div>
+      </div>
+       )
   }
 
   return (
@@ -164,7 +182,9 @@ export default function ProductViewer() {
           {/* Add to Wishlist Button */}
           <button
             className={`mt-4 w-full py-3 ${
-              isInWishlist ? "bg-red-500 hover:bg-red-600" : "bg-gray-500 hover:bg-gray-600"
+              isInWishlist
+                ? "bg-red-500 hover:bg-red-600"
+                : "bg-gray-500 hover:bg-gray-600"
             } text-white rounded-md flex items-center justify-center`}
             onClick={handleWishlistToggle}
             disabled={isWishlistLoading}
